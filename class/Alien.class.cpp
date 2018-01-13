@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Alien.class.cpp        _             _              :::      ::::::::   */
+/*    Alien.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -29,8 +29,21 @@ Alien &Alien::operator=(Alien const &r) {
 	return (*this);
 }
 
-void		Alien::moveDown(void) {
-	this->_y++;
+void		Alien::movement(void) {
+	float prob = 1.0 * rand() / RAND_MAX;
+
+	if (prob < 0.45) {
+		if (this->_x > 0)	moveLeft();
+		else				moveRight();
+	}
+	else if (prob < 0.9) {
+		if (this->_x < 50)	moveRight();
+		else				moveLeft();
+	}
+	else {
+		if (this->_y < 15)	moveDown();
+		else				this->_life = 0;
+	}
 }
 
 int			Alien::isAlive(void) {

@@ -25,7 +25,7 @@ class	Alien : public Enemy {
 		virtual ~Alien(void);
 		Alien &operator=(Alien const &r);
 
-		void	moveDown(void);
+		void	movement(void);
 		int		isAlive(void);
 };
 

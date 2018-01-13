@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Enemy.class.cpp        _             _              :::      ::::::::   */
+/*    Enemy.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -50,6 +50,14 @@ void		Enemy::moveRight(void) {
 
 void		Enemy::moveLeft(void) {
 	this->_x--;
+}
+
+void		Enemy::moveUp(void) {
+	this->_y--;
+}
+
+void		Enemy::moveDown(void) {
+	this->_y++;
 }
 
 int			Enemy::isHit(int x, int y) {
