@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>
 #include "Enemy.class.hpp"
 #include "Alien.class.hpp"
 
@@ -60,6 +61,21 @@ int main(){
         attroff(A_STANDOUT | A_UNDERLINE);
     }
 
+    int test = 0;
+    while(test == 0)
+    {
+        for (int i = 0; i < 10; i++){
+            mvprintw(enemy[i].getY(), enemy[i].getX(), " ");
+        }
+          for (int i = 0; i < 10; i++){
+            enemy[i].moveRight();
+            attron(A_STANDOUT | A_UNDERLINE);
+            mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
+            attroff(A_STANDOUT | A_UNDERLINE);
+        }
+        sleep(2);
+        refresh();
+    }
     
 
 
