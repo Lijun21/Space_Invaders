@@ -1,19 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
+/*   Updated: 2018/01/12 20:27:12 by lwang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ncurses.h>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "Enemy.class.hpp"
 
 using namespace std;
 
 
 int main(){
     srand(time(NULL));
+
     bool endgame = false;
     int gamespeed = 400;
+
     int score = 0;
     int lives = 5;
     int randam_enemies_x;
     int randam_enemies_y;
+
+    char enemies[10][2];
 
     initscr();//creates std screen
     raw();//enter raw modal
@@ -28,17 +45,21 @@ int main(){
     // mvaddch(6, 5, '@');
 
     for (int i = 0; i < 10; i++){
-        randam_enemies_x = rand() % 30 + 3;
-        randam_enemies_y = rand() % 3 + 1;
+        enemies[i][0] = rand() % 30 + 3;
+        enemies[i][1] = rand() % 3 + 1;
         attron(A_STANDOUT | A_UNDERLINE);
         mvprintw(randam_enemies_y, randam_enemies_x, "@");
         attroff(A_STANDOUT | A_UNDERLINE);
     }
 
+    
+
+
     // move(60, 50);
 
     start_color();
     init_pair(1, COLOR_BLUE, COLOR_GREEN);
+
     attron(COLOR_PAIR(1));
     mvaddch(20, 25, 'P');
     attroff(COLOR_PAIR(1));
