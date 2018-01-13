@@ -22,6 +22,7 @@ class	Enemy {
 
 		Enemy(void);
 		Enemy(int x, int y);
+		Enemy(int x, int y, int life);
 		Enemy(Enemy &obj);
 		virtual ~Enemy(void);
 		Enemy &operator=(Enemy const &r);
@@ -30,6 +31,11 @@ class	Enemy {
 
 		int			getX(void);
 		int			getY(void);
+
+		void		moveRight(void);
+		void		moveLeft(void);
+
+		int			isHit(int x, int y);
 
 	protected:
 		int			_x;

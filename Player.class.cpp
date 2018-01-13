@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Alien.class.cpp     	 _             _              :::      ::::::::   */
+/*    Player.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -11,29 +11,21 @@
 /* ************************************************************************** */
 
 #include <iostream>
-#include "Alien.class.hpp"
+#include "Player.class.hpp"
 
-Alien::Alien(void) : Enemy() {}
+Player::Player(void) : Enemy() {}
 
-Alien::Alien(int x, int y) : Enemy(x, y) {}
+Player::Player(int x, int y) : Enemy(x, y, 5) {}
 
-Alien::Alien(Alien &obj) { 
+Player::Player(Player &obj) { 
 	*this = obj;
 }
 
-Alien::~Alien(void) {}
+Player::~Player(void) {}
 
-Alien &Alien::operator=(Alien const &r) {
+Player &Player::operator=(Player const &r) {
 	this->_x = r._x;
 	this->_y = r._y;
 	this->_life = r._life;
 	return (*this);
-}
-
-void		Alien::moveDown(void) {
-	this->_y++;
-}
-
-int			Alien::isAlive(void) {
-	return (this->_life);
 }
