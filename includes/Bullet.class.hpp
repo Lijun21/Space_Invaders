@@ -20,7 +20,7 @@ class	Bullet {
 	public:
 
 		Bullet(void);
-		Bullet(int x, int y, int i);
+		Bullet(int x, int y);
 		Bullet(Bullet &obj);
 		virtual ~Bullet(void);
 		Bullet &operator=(Bullet const &r);

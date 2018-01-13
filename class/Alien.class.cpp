@@ -29,7 +29,7 @@ Alien &Alien::operator=(Alien const &r) {
 	return (*this);
 }
 
-void		Alien::movement(void) {
+int			Alien::movement(void) {
 	float prob = 1.0 * rand() / RAND_MAX;
 
 	if (prob < 0.45) {
@@ -41,9 +41,10 @@ void		Alien::movement(void) {
 		else				moveLeft();
 	}
 	else {
-		if (this->_y < 15)	moveDown();
-		else				this->_life = 0;
+		if (this->_y < 20)	moveDown();
+		else				{ this->_life = 0; return (1); }
 	}
+	return (0);
 }
 
 int			Alien::isAlive(void) {

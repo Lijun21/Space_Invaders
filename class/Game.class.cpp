@@ -14,6 +14,7 @@
 
 Game::Game(void) : _endgame(1) {
 	this->_bullet = new Bullet[16];
+	this->_ebullet = new Bullet[10];
 	spawnEnemy();
 	spawnPlayer();
 }
@@ -24,6 +25,7 @@ Game::Game(Game &obj) {
 
 Game::~Game(void) {
 	delete [] this->_bullet;
+	delete [] this->_ebullet;
 }
 
 Game &Game::operator=(Game const &r) {
@@ -55,10 +57,13 @@ void		Game::moveEnemies(void) {
 		}
 	for (int i = 0; i < 10; i++){
 		if (_enemy[i].checkLife()) {
-			_enemy[i].moveRight();
-			attron(A_STANDOUT | A_UNDERLINE);
+			if(_enemy[i].movement()) {
+				if(_player.loseLife())
+					_endgame = 0;
+			}
+			// attron(A_STANDOUT | A_UNDERLINE);
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
-			attroff(A_STANDOUT | A_UNDERLINE);
+			// attroff(A_STANDOUT | A_UNDERLINE);
 		}
     }
     refresh();
@@ -83,19 +88,30 @@ void		Game::getInput(int c) {
 		_player.moveRight();
 	if (c == KEY_LEFT)
 		_player.moveLeft();
-	attron(COLOR_PAIR(1));
-	mvaddch(_player.getY(), _player.getX(), 'P');
-	attroff(COLOR_PAIR(1));
+	// attron(COLOR_PAIR(1));
+	mvaddch(_player.getY(), _player.getX(), '^');
+	// attroff(COLOR_PAIR(1));
 	refresh();
 }
 
 int		Game::_checkHit(int x, int y) {
 	for (int i = 0; i < 10; i++){
-		if (_enemy[i].isHit(x, y)) {
+		if (_enemy[i].checkLife() && _enemy[i].isHit(x, y)) {
+			_score = _score + 1;
 			return (1);
 		}
-    }
-    return (0);
+	}
+	return (0);
+}
+
+int		Game::_checkPHit(int x, int y) {
+	if (_player.isHit(x, y)) {
+		if(_player.bulletHit()) {
+			_endgame = 0;
+		}
+		return (1);
+	}
+	return (0);
 }
 
 void		Game::moveBullets(void) {
@@ -104,11 +120,31 @@ void		Game::moveBullets(void) {
 			this->_bullet[i].clearBullet();
 			this->_bullet[i].moveUp();
 			this->_bullet[i].shootBullet();
+			if (this->_bullet[i].getY() == -1) {
+				this->_bullet[i].setLife(0);
+				this->_bullet[i].clearBullet();
+			}
 			if (_checkHit(this->_bullet[i].getX(), this->_bullet[i].getY())) {
 				this->_bullet[i].setLife(0);
+				this->_bullet[i].clearBullet();
 			}
 		}
 	}
+	for (int i = 0; i < 10; i++) {
+		if (this->_ebullet[i].checkLife()) {
+			this->_ebullet[i].clearBullet();
+			this->_ebullet[i].moveDown();
+			this->_ebullet[i].shootBullet();
+			if (this->_ebullet[i].getY() >= 20) {
+				this->_ebullet[i].setLife(0);
+				this->_ebullet[i].clearBullet();
+			}
+			if (_checkPHit(this->_ebullet[i].getX(), this->_ebullet[i].getY())) {
+				this->_ebullet[i].setLife(0);
+				this->_ebullet[i].clearBullet();
+			}
+		}
+	}	
 	refresh();
 }
 
@@ -121,6 +157,24 @@ void		Game::playerBullet(void) {
 	}
 }
 
+void		Game::enemyBullet(void) {
+	int rd = 0;
 
+	for (int i = 0; i < 10; i++) {
+		rd = rand();
+		if ((rd % 15 == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
+			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
+			return;
+		}
+	}
+}
+
+int			Game::getScore(void) {
+	return (this->_score);
+}
+
+int			Game::getLife(void) {
+	return (this->_player.checkLife());
+}
 
 

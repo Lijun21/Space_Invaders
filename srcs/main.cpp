@@ -40,12 +40,9 @@ int main(){
     initscr();//creates std screen
     cbreak();//enter raw modal
     noecho();
-    printw("SCORE  %d", score);
-    move(0, 50);
-    printw("LIVES  %d", lives);
+    curs_set(0);
 
     // addch('a');
-    move(0, 0);
 
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
@@ -58,12 +55,16 @@ int main(){
     refresh();
     while(game->checkEndgame())
     {
+        mvprintw(0, 0, "SCORE  %d", game->getScore());
+        mvprintw(0, 50, "LIVES  %d", game->getLife());
         if ((c = getch()) != ERR)
             game->getInput(c);
-        if (cnt % 30000 == 0)
+        if (cnt % 3000 == 0)
             game->moveBullets();
-        if (cnt % 60000 == 0)
+        if (cnt % 6000 == 0) {
             game->moveEnemies();
+            game->enemyBullet();
+        }
 		cnt++;
 		if (cnt > 100000000)
 			cnt = 0;

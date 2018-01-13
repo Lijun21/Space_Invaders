@@ -36,15 +36,24 @@ class	Game {
 		void	playerBullet(void);
 		void	moveBullets(void);
 
+		void	enemyBullet(void);
+
+		int		getScore(void);
+		int		getLife(void);
+
 	private:
 
 		int		_checkHit(int x, int y);
+		int		_checkPHit(int x, int y);
 
 		int		_input;
 		Alien 	_enemy[10];
 		Player	_player;
 		int		_endgame;
 		Bullet	*_bullet;
+		Bullet	*_ebullet;
+
+		int		_score;
 
 };
 

@@ -14,7 +14,7 @@
 
 Bullet::Bullet(void) {}
 
-Bullet::Bullet(int x, int y, int i) : _x(x), _y(y), _type(i), _life(0) {}
+Bullet::Bullet(int x, int y) : _x(x), _y(y), _life(0) {}
 
 Bullet::Bullet(Bullet &obj) { 
 	*this = obj;

@@ -25,6 +25,10 @@ class	Player : public Enemy {
 		virtual ~Player(void);
 		Player &operator=(Player const &r);
 
+		int		loseLife(void);
+
+		int		bulletHit(void);
+
 };
 
 #endif

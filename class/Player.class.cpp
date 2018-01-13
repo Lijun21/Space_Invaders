@@ -28,3 +28,18 @@ Player &Player::operator=(Player const &r) {
 	this->_life = r._life;
 	return (*this);
 }
+
+int			Player::loseLife(void) {
+	this->_life--;
+	if (this->_life <= 0)
+		return (1);
+	return (0);
+}
+int			Player::bulletHit(void) {
+	this->_life--;
+	if (this->_life == 0)
+		return (1);
+	if (this->_life <= -1)
+		this->_life += 5;
+	return (0);
+}
