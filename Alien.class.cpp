@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Enemy.class.hpp        _             _              :::      ::::::::   */
+/*    Alien.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,28 +10,44 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef ENEMY_H
-# define ENEMY_H
-
 #include <iostream>
+#include "Alien.class.hpp"
 
+Alien::Alien(int x, int y) : Enemy(x, y) {}
 
-class	Enemy {
+Alien::Alien(Alien &obj) { 
+	*this = obj;
+}
 
-	public:
+Alien::~Alien(void) {}
 
-		Enemy(void);
-		Enemy(int x, int y);
-		Enemy(Enemy &obj);
-		virtual ~Enemy(void);
-		Enemy &operator=(Enemy const &r);
+Alien &Alien::operator=(Alien const &r) {
+	this->_x = r._x;
+	this->_y = r._y;
+	return (*this);
+}
 
+int			Alien::isHit(int x, int y) {
+	if (this->_x == x && this->_y == y)
+	{
+		this->_life = 0;
+		return (1);
+	}
+	return (0);
+}
 
-	protected:
-		int			_x;
-		int			_y;
-		int			_life;
+void		Alien::moveRight() {
+	this->_x++;
+}
 
-};
+void		Alien::moveLeft() {
+	this->_x--;
+}
 
-#endif
+void		Alien::moveDown() {
+	this->_y++;
+}
+
+int			Alien::isAlive() {
+	return (this->_life);
+}

@@ -21,8 +21,7 @@ Enemy::Enemy(Enemy &obj) {
 
 Enemy::~Enemy(void) {}
 
-Enemy &Enemy::operator=(Enemy const &r) 
-{
+Enemy &Enemy::operator=(Enemy const &r) {
 	this->_x = r._x;
 	this->_y = r._y;
 	return (*this);

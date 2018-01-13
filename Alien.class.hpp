@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Enemy.class.hpp        _             _              :::      ::::::::   */
+/*    Alien.class.hpp        _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,28 +10,28 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef ENEMY_H
-# define ENEMY_H
+#ifndef ALIEN_H
+# define ALIEN_H
 
 #include <iostream>
 
 
-class	Enemy {
+class	Alien : public Enemy {
 
 	public:
 
-		Enemy(void);
-		Enemy(int x, int y);
-		Enemy(Enemy &obj);
-		virtual ~Enemy(void);
-		Enemy &operator=(Enemy const &r);
+		Alien(void);
+		Alien(int x, int y);
+		Alien(Alien &obj);
+		virtual ~Alien(void);
+		Alien &operator=(Alien const &r);
 
+		int		isHit(int x, int y);
 
-	protected:
-		int			_x;
-		int			_y;
-		int			_life;
-
+		void	moveRight();
+		void	moveLeft();
+		void	moveDown();
+		void	isAlive();
 };
 
 #endif
