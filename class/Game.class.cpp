@@ -12,7 +12,10 @@
 
 #include <Space.Invaders.hpp>
 
-Game::Game(void) : _endgame(1) {}
+Game::Game(void) : _endgame(1) {
+	spawnEnemy();
+	spawnPlayer();
+}
 
 Game::Game(Game &obj) { 
 	*this = obj;
@@ -54,4 +57,26 @@ void		Game::moveEnemies(int i) {
 		mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
 		attroff(A_STANDOUT | A_UNDERLINE);
     }
+    refresh();
 }
+
+void		Game::spawnPlayer(void) {
+	_player = Player(25, 20);
+}
+
+void		Game::getInput(int c) {
+	if (c == KEY_RIGHT || c == KEY_LEFT)
+		mvaddch(_player._y, _player._x, ' ');
+	if (c == KEY_RIGHT)
+		_player._x += 1;
+	if (c == KEY_LEFT)
+			_player._x -= 1;
+	attron(COLOR_PAIR(1));
+	mvaddch(_player._y, _player._x, 'P');
+	attroff(COLOR_PAIR(1));
+	refresh();
+}
+
+
+
+

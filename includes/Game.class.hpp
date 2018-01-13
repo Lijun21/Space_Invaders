@@ -25,11 +25,13 @@ class	Game {
 		Game &operator=(Game const &r);
 
 		int		checkEndgame(void);
-		void	spawnEnemy(void);
-		void	spawnPlayer(void);
-		void	getInput(int i);
+		void	getInput(int c);
 
+		void	spawnEnemy(void);
 		void	moveEnemies(int i);
+
+		void	spawnPlayer(void);
+		void	movePlayer(void);
 
 
 	private:
