@@ -6,7 +6,7 @@
 #    By: mikim <mikim@student.42.us.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/12 22:56:20 by mikim             #+#    #+#              #
-#    Updated: 2018/01/12 23:46:53 by mikim            ###   ########.fr        #
+#    Updated: 2018/01/13 12:27:57 by mikim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,8 @@ $(OBJDIR_CLASS)%.o: $(SRCDIR_CLASS)%.cpp
 	@$(CC) $(CFLAG) $(HEADER) $< -o $@
 
 $(NAME): $(OBJS) $(OBJS_CLASS)
-	@$(CC) $(OBJS) $(BOJS_CLASS) $(HEADER) $(LIBS) -o $@
-	@echo "\x1xb[32;1m[space.invaders - 모래반지 빵야빵야!]\x1b[0m"
+	@$(CC) $(OBJS) $(OBJS_CLASS) $(HEADER) $(LIBS) -o $@
+	@echo "\x1b[32;1m[space.invaders - 모래반지 빵야빵야!]\x1b[0m"
 
 clean:
 	@/bin/rm -rf $(OBJDIR)
