@@ -6,7 +6,7 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/12 20:27:12 by lwang            ###   ########.fr       */
+/*   Updated: 2018/01/12 21:55:26 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int main(){
     nodelay(stdscr, TRUE);
 
     int c;
+	int cnt;
 
     start_color();
     init_pair(1, COLOR_BLUE, COLOR_GREEN);
@@ -87,7 +88,7 @@ int main(){
             attroff(COLOR_PAIR(1));
             refresh();
         }
-        else
+        else if (cnt % 60000 == 0)
         {
             for (int i = 0; i < 10; i++){
                 mvprintw(enemy[i].getY(), enemy[i].getX(), " ");
@@ -100,9 +101,12 @@ int main(){
                 mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
                 attroff(A_STANDOUT | A_UNDERLINE);
             }
-            sleep(1);
+            //sleep(1);
             refresh();
         }
+		cnt++;
+		if (cnt > 100000000)
+			cnt = 0;
         // sleep(1);
         // refresh();
     }
