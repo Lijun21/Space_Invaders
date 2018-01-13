@@ -33,6 +33,8 @@ class	Enemy {
 
 		void		moveRight(void);
 		void		moveLeft(void);
+		void		moveUp(void);
+		void		moveDown(void);
 
 		int			isHit(int x, int y);
 
