@@ -26,6 +26,10 @@ class	Enemy {
 		virtual ~Enemy(void);
 		Enemy &operator=(Enemy const &r);
 
+		void		setPos(int x, int y);
+
+		int			getX(void);
+		int			getY(void);
 
 	protected:
 		int			_x;

@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Enemy.class.hpp"
+#include "Alien.class.hpp"
 
 using namespace std;
 
@@ -40,15 +41,22 @@ int main(){
 
     // addch('a');
     move(0, 0);
+    
+    /*
+    ** michael change
+    */
+    Alien enemy[10];
 
     // mvprintw(5, 5, "Movement");
     // mvaddch(6, 5, '@');
 
     for (int i = 0; i < 10; i++){
-        enemies[i][0] = rand() % 30 + 3;
-        enemies[i][1] = rand() % 3 + 1;
+        // enemies[i][0] = rand() % 30 + 3;
+        // enemies[i][1] = rand() % 3 + 1;
+        enemy[i].setPos((rand() % 30 + 3), (rand() % 3 + 1));
         attron(A_STANDOUT | A_UNDERLINE);
-        mvprintw(randam_enemies_y, randam_enemies_x, "@");
+        // mvprintw(randam_enemies_y, randam_enemies_x, "@");
+        mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
         attroff(A_STANDOUT | A_UNDERLINE);
     }
 

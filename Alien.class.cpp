@@ -13,6 +13,8 @@
 #include <iostream>
 #include "Alien.class.hpp"
 
+Alien::Alien(void) : Enemy() {}
+
 Alien::Alien(int x, int y) : Enemy(x, y) {}
 
 Alien::Alien(Alien &obj) { 
@@ -36,18 +38,18 @@ int			Alien::isHit(int x, int y) {
 	return (0);
 }
 
-void		Alien::moveRight() {
+void		Alien::moveRight(void) {
 	this->_x++;
 }
 
-void		Alien::moveLeft() {
+void		Alien::moveLeft(void) {
 	this->_x--;
 }
 
-void		Alien::moveDown() {
+void		Alien::moveDown(void) {
 	this->_y++;
 }
 
-int			Alien::isAlive() {
+int			Alien::isAlive(void) {
 	return (this->_life);
 }

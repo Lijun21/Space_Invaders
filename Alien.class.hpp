@@ -14,7 +14,7 @@
 # define ALIEN_H
 
 #include <iostream>
-
+#include "Enemy.class.hpp"
 
 class	Alien : public Enemy {
 
@@ -28,10 +28,10 @@ class	Alien : public Enemy {
 
 		int		isHit(int x, int y);
 
-		void	moveRight();
-		void	moveLeft();
-		void	moveDown();
-		void	isAlive();
+		void	moveRight(void);
+		void	moveLeft(void);
+		void	moveDown(void);
+		int		isAlive(void);
 };
 
 #endif
