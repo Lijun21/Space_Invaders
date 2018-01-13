@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Enemy.class.hpp        _             _              :::      ::::::::   */
+/*    Bullet.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,38 +10,37 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef ENEMY_H
-# define ENEMY_H
+#include <Space.Invaders.hpp>
 
-#include <iostream>
+Bullet::Bullet(void) : Bullet() {}
 
+Bullet::Bullet(int x, int y) : Bullet(x, y) {}
 
-class	Enemy {
+Bullet::Bullet(Bullet &obj) { 
+	*this = obj;
+}
 
-	public:
+Bullet::~Bullet(void) {}
 
-		Enemy(void);
-		Enemy(int x, int y);
-		Enemy(int x, int y, int life);
-		Enemy(Enemy &obj);
-		virtual ~Enemy(void);
-		Enemy &operator=(Enemy const &r);
+Bullet &Bullet::operator=(Bullet const &r) {
+	this->_x = r._x;
+	this->_y = r._y;
+	this->_life = r._life;
+	return (*this);
+}
 
-		void		setPos(int x, int y);
+int			Bullet::getX(void) {
+	return (this->_x);
+}
 
-		int			getX(void);
-		int			getY(void);
+int			Bullet::getY(void) {
+	return (this->_y);
+}
 
-		void		moveRight(void);
-		void		moveLeft(void);
+void		Alien::moveDown(void) {
+	this->_y++;
+}
 
-		int			isHit(int x, int y);
-
-	protected:
-		int			_x;
-		int			_y;
-		int			_life;
-
-};
-
-#endif
+void		Alien::moveUp(void) {
+	this->_y--;
+}

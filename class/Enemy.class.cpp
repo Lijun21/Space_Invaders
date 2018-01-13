@@ -10,8 +10,7 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "Enemy.class.hpp"
+#include <Space.Invaders.hpp>
 
 Enemy::Enemy(void) : _life(1) {}
 

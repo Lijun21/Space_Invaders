@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Bullet.class.hpp       _             _              :::      ::::::::   */
+/*    Alien.class.hpp        _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,31 +10,23 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef BULLET_H
-# define BULLET_H
+#ifndef ALIEN_H
+# define ALIEN_H
 
-#include <iostream>
+# include <Space.Invaders.hpp>
 
-class	Bullet {
+class	Alien : public Enemy {
 
 	public:
 
-		Bullet(void);
-		Bullet(int x, int y);
-		Bullet(Bullet &obj);
-		virtual ~Bullet(void);
-		Bullet &operator=(Bullet const &r);
+		Alien(void);
+		Alien(int x, int y);
+		Alien(Alien &obj);
+		virtual ~Alien(void);
+		Alien &operator=(Alien const &r);
 
-		int			getX(void);
-		int			getY(void);
-
-		void		moveDown(void);
-		void		moveUp(void);
-
-	protected:
-		int		_x;
-		int		_y;
-
+		void	moveDown(void);
+		int		isAlive(void);
 };
 
 #endif

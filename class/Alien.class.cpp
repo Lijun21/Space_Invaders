@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Alien.class.hpp        _             _              :::      ::::::::   */
+/*    Alien.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,24 +10,29 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef ALIEN_H
-# define ALIEN_H
+#include <Space.Invaders.hpp>
 
-#include <iostream>
-#include "Enemy.class.hpp"
+Alien::Alien(void) : Enemy() {}
 
-class	Alien : public Enemy {
+Alien::Alien(int x, int y) : Enemy(x, y) {}
 
-	public:
+Alien::Alien(Alien &obj) { 
+	*this = obj;
+}
 
-		Alien(void);
-		Alien(int x, int y);
-		Alien(Alien &obj);
-		virtual ~Alien(void);
-		Alien &operator=(Alien const &r);
+Alien::~Alien(void) {}
 
-		void	moveDown(void);
-		int		isAlive(void);
-};
+Alien &Alien::operator=(Alien const &r) {
+	this->_x = r._x;
+	this->_y = r._y;
+	this->_life = r._life;
+	return (*this);
+}
 
-#endif
+void		Alien::moveDown(void) {
+	this->_y++;
+}
+
+int			Alien::isAlive(void) {
+	return (this->_life);
+}

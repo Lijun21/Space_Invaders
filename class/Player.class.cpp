@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Player.class.hpp       _             _              :::      ::::::::   */
+/*    Player.class.cpp     	 _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,22 +10,21 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef PLAYER_H
-# define PLAYER_H
+#include <Space.Invaders.hpp>
 
-#include <iostream>
-#include "Enemy.class.hpp"
+Player::Player(void) : Enemy() {}
 
-class	Player : public Enemy {
+Player::Player(int x, int y) : Enemy(x, y, 5) {}
 
-	public:
+Player::Player(Player &obj) { 
+	*this = obj;
+}
 
-		Player(void);
-		Player(int x, int y);
-		Player(Player &obj);
-		virtual ~Player(void);
-		Player &operator=(Player const &r);
+Player::~Player(void) {}
 
-};
-
-#endif
+Player &Player::operator=(Player const &r) {
+	this->_x = r._x;
+	this->_y = r._y;
+	this->_life = r._life;
+	return (*this);
+}

@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Player.class.cpp     	 _             _              :::      ::::::::   */
+/*    Bullet.class.hpp       _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,22 +10,31 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "Player.class.hpp"
+#ifndef BULLET_H
+# define BULLET_H
 
-Player::Player(void) : Enemy() {}
+# include <Space.Invaders.hpp>
 
-Player::Player(int x, int y) : Enemy(x, y, 5) {}
+class	Bullet {
 
-Player::Player(Player &obj) { 
-	*this = obj;
-}
+	public:
 
-Player::~Player(void) {}
+		Bullet(void);
+		Bullet(int x, int y);
+		Bullet(Bullet &obj);
+		virtual ~Bullet(void);
+		Bullet &operator=(Bullet const &r);
 
-Player &Player::operator=(Player const &r) {
-	this->_x = r._x;
-	this->_y = r._y;
-	this->_life = r._life;
-	return (*this);
-}
+		int			getX(void);
+		int			getY(void);
+
+		void		moveDown(void);
+		void		moveUp(void);
+
+	protected:
+		int		_x;
+		int		_y;
+
+};
+
+#endif

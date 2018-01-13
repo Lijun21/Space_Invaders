@@ -6,17 +6,11 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/12 21:55:26 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/12 23:59:23 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ncurses.h>
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <unistd.h>
-#include "Enemy.class.hpp"
-#include "Alien.class.hpp"
+#include <Space.Invaders.hpp>
 
 using namespace std;
 
