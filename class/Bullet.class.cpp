@@ -12,9 +12,9 @@
 
 #include <Space.Invaders.hpp>
 
-Bullet::Bullet(void) : Bullet() {}
+Bullet::Bullet(void) {}
 
-Bullet::Bullet(int x, int y) : Bullet(x, y) {}
+Bullet::Bullet(int x, int y) : _x(x), _y(y) {}
 
 Bullet::Bullet(Bullet &obj) { 
 	*this = obj;
@@ -25,7 +25,6 @@ Bullet::~Bullet(void) {}
 Bullet &Bullet::operator=(Bullet const &r) {
 	this->_x = r._x;
 	this->_y = r._y;
-	this->_life = r._life;
 	return (*this);
 }
 
@@ -37,10 +36,10 @@ int			Bullet::getY(void) {
 	return (this->_y);
 }
 
-void		Alien::moveDown(void) {
+void		Bullet::moveDown(void) {
 	this->_y++;
 }
 
-void		Alien::moveUp(void) {
+void		Bullet::moveUp(void) {
 	this->_y--;
 }
