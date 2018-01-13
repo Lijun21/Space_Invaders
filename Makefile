@@ -15,7 +15,8 @@ SRC = main.cpp
 SRC_CLASS = Alien.class.cpp \
 		Bullet.class.cpp \
 		Enemy.class.cpp \
-		Player.class.cpp
+		Player.class.cpp \
+		Game.class.cpp
 
 OBJ = $(SRC:.cpp=.o)
 OBJ_CLASS = $(SRC_CLASS:.cpp=.o)

@@ -26,7 +26,8 @@ void       player_move(int c, int *x, int *y)
 int main(){
     srand(time(NULL));
 
-    bool endgame = false;
+    Game *game = new Game();
+
     int gamespeed = 400;
 
     int score = 0;
@@ -54,12 +55,13 @@ int main(){
     // mvprintw(5, 5, "Movement");
     // mvaddch(6, 5, '@');
 
-    for (int i = 0; i < 10; i++){
-        enemy[i].setPos((rand() % 30 + 3), (rand() % 3 + 1));
-        attron(A_STANDOUT | A_UNDERLINE);
-        mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
-        attroff(A_STANDOUT | A_UNDERLINE);
-    }
+    // for (int i = 0; i < 10; i++){
+    //     enemy[i].setPos((rand() % 30 + 3), (rand() % 3 + 1));
+    //     attron(A_STANDOUT | A_UNDERLINE);
+    //     mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
+    //     attroff(A_STANDOUT | A_UNDERLINE);
+    // }
+    game->spawnEnemy();
 
     int p_x = 25;
     int p_y = 20;
@@ -71,7 +73,7 @@ int main(){
 
     start_color();
     init_pair(1, COLOR_BLUE, COLOR_GREEN);
-    while(endgame == false)
+    while(game->checkEndgame())
     {
         if ((c = getch()) != ERR)
         {
@@ -84,17 +86,18 @@ int main(){
         }
         else if (cnt % 60000 == 0)
         {
-            for (int i = 0; i < 10; i++){
-                mvprintw(enemy[i].getY(), enemy[i].getX(), " ");
-            }
-              for (int i = 0; i < 10; i++){
-                // if (int c = getch())
-                //     player_move(c, &p_x, &p_y);
-                enemy[i].moveRight();
-                attron(A_STANDOUT | A_UNDERLINE);
-                mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
-                attroff(A_STANDOUT | A_UNDERLINE);
-            }
+            game->moveEnemies(0);
+            // for (int i = 0; i < 10; i++){
+            //     mvprintw(enemy[i].getY(), enemy[i].getX(), " ");
+            // }
+            //   for (int i = 0; i < 10; i++){
+            //     // if (int c = getch())
+            //     //     player_move(c, &p_x, &p_y);
+            //     enemy[i].moveRight();
+            //     attron(A_STANDOUT | A_UNDERLINE);
+            //     mvprintw(enemy[i].getY(), enemy[i].getX(), "@");
+            //     attroff(A_STANDOUT | A_UNDERLINE);
+            // }
             //sleep(1);
             refresh();
         }

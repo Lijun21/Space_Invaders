@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Player.class.cpp       _             _              :::      ::::::::   */
+/*    Game.class.hpp         _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,21 +10,35 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#include <Space.Invaders.hpp>
+#ifndef Game_H
+# define Game_H
 
-Player::Player(void) : Enemy() {}
+# include <Space.Invaders.hpp>
 
-Player::Player(int x, int y) : Enemy(x, y, 5) {}
+class	Game {
 
-Player::Player(Player &obj) { 
-	*this = obj;
-}
+	public:
 
-Player::~Player(void) {}
+		Game(void);
+		Game(Game &obj);
+		virtual ~Game(void);
+		Game &operator=(Game const &r);
 
-Player &Player::operator=(Player const &r) {
-	this->_x = r._x;
-	this->_y = r._y;
-	this->_life = r._life;
-	return (*this);
-}
+		int		checkEndgame(void);
+		void	spawnEnemy(void);
+		void	spawnPlayer(void);
+		void	getInput(int i);
+
+		void	moveEnemies(int i);
+
+
+	private:
+
+		int		_input;
+		Alien 	_enemy[10];
+		Player	_player;
+		int		_endgame;
+
+};
+
+#endif

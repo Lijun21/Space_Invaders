@@ -22,5 +22,6 @@
 # include <Alien.class.hpp>
 # include <Bullet.class.hpp>
 # include <Player.class.hpp>
+# include <Game.class.hpp>
 
 #endif
