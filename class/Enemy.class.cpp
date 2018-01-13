@@ -60,3 +60,7 @@ int			Enemy::isHit(int x, int y) {
 	}
 	return (0);
 }
+
+int			Enemy::checkLife(void) {
+	return (this->_life);
+}

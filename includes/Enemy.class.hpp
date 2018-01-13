@@ -35,6 +35,7 @@ class	Enemy {
 		void		moveLeft(void);
 
 		int			isHit(int x, int y);
+		int			checkLife(void);
 
 	protected:
 		int			_x;

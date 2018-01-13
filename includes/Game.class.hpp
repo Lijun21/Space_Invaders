@@ -28,18 +28,23 @@ class	Game {
 		void	getInput(int c);
 
 		void	spawnEnemy(void);
-		void	moveEnemies(int i);
+		void	moveEnemies(void);
 
 		void	spawnPlayer(void);
 		void	movePlayer(void);
 
+		void	playerBullet(void);
+		void	moveBullets(void);
 
 	private:
+
+		int		_checkHit(int x, int y);
 
 		int		_input;
 		Alien 	_enemy[10];
 		Player	_player;
 		int		_endgame;
+		Bullet	*_bullet;
 
 };
 

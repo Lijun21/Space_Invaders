@@ -14,7 +14,7 @@
 
 Bullet::Bullet(void) {}
 
-Bullet::Bullet(int x, int y) : _x(x), _y(y) {}
+Bullet::Bullet(int x, int y, int i) : _x(x), _y(y), _type(i), _life(0) {}
 
 Bullet::Bullet(Bullet &obj) { 
 	*this = obj;
@@ -43,3 +43,27 @@ void		Bullet::moveDown(void) {
 void		Bullet::moveUp(void) {
 	this->_y--;
 }
+
+void		Bullet::shootBullet(void) {
+	mvprintw(_y, _x, ".");
+}
+
+void		Bullet::clearBullet(void) {
+	mvprintw(_y, _x, " ");
+}
+
+int			Bullet::checkLife(void) {
+	return (this->_life);
+}
+
+void		Bullet::setLife(int i) {
+	this->_life = i;
+}
+
+void		Bullet::setInfo(int x, int y, int life){
+	this->_x = x;
+	this->_y = y;
+	this->_life = 1;
+}
+
+

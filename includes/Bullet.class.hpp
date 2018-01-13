@@ -20,20 +20,29 @@ class	Bullet {
 	public:
 
 		Bullet(void);
-		Bullet(int x, int y);
+		Bullet(int x, int y, int i);
 		Bullet(Bullet &obj);
 		virtual ~Bullet(void);
 		Bullet &operator=(Bullet const &r);
 
 		int			getX(void);
 		int			getY(void);
+		int			checkLife(void);
 
 		void		moveDown(void);
 		void		moveUp(void);
 
+		void		shootBullet(void);
+		void		clearBullet(void);
+
+		void		setLife(int i);
+		void		setInfo(int x, int y, int life);
+
 	protected:
 		int		_x;
 		int		_y;
+		int		_type;
+		int		_life;
 
 };
 

@@ -55,12 +55,15 @@ int main(){
 
     start_color();
     init_pair(1, COLOR_BLUE, COLOR_GREEN);
+    refresh();
     while(game->checkEndgame())
     {
         if ((c = getch()) != ERR)
             game->getInput(c);
-        else if (cnt % 60000 == 0)
-            game->moveEnemies(0);
+        if (cnt % 30000 == 0)
+            game->moveBullets();
+        if (cnt % 60000 == 0)
+            game->moveEnemies();
 		cnt++;
 		if (cnt > 100000000)
 			cnt = 0;
