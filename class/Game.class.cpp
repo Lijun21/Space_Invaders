@@ -16,8 +16,9 @@ Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_eCount = 8;
 	this->_eBullet = 8;
 	this->_eElite = 0;
+	this->_ammoPouch = 14;
 
-	this->_bullet = new Bullet[16];
+	this->_bullet = new Bullet[this->_ammoPouch];
 	this->_ebullet = new Bullet[this->_eBullet];
 	this->_enemy = new Alien[this->_eCount];
 
@@ -27,7 +28,7 @@ Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_score = 0;
 	this->_bspd = 34;
 	this->_death = 0;
-	this->_level = 0;
+	this->_level = 6;
 
 	spawnEnemy();
 	spawnPlayer();
@@ -65,12 +66,13 @@ void		Game::spawnEnemy(void) {
 
 	if (this->_level % 3 == 0)
 	{
+		this->_player.setLife(this->_player.checkLife() + 1);
 		delete [] this->_elite;
 		this->_eElite = (this->_level / 3);
 		this->_elite = new Elite[this->_eElite];
 		this->_elitebullet = new Bullet[this->_eElite * 3];
 		for (int i = 0; i < this->_eElite; i++) {
-			_elite[i].setPos(2 + (rand() % _mapx + 3), (rand() % 3 + 1));
+			_elite[i].setPos(2 + (rand() % _mapx + 3), 1 + (rand() % 3 + 1));
 			_elite[i].setLife(25);
 		}
 	}
@@ -79,18 +81,21 @@ void		Game::spawnEnemy(void) {
 
 	delete [] this->_ebullet;
 	delete [] this->_enemy;
+	delete [] this->_bullet;
 
 	this->_eCount = 10 + (this->_level * 2);
 	this->_eBullet = 10 + (this->_level * 2);
+	this->_ammoPouch = 16 + (this->_level * 1);
 
 	this->_ebullet = new Bullet[this->_eBullet];
 	this->_enemy = new Alien[this->_eCount];
+	this->_bullet = new Bullet[this->_ammoPouch];
 
 	this->_level++;
 	if (this->_bspd > 4)
 		this->_bspd -= 4;
 	for (int i = 0; i < this->_eCount; i++) {
-		_enemy[i].setPos(2 + (rand() % _mapx + 3), (rand() % 3 + 1));
+		_enemy[i].setPos(2 + (rand() % _mapx + 3), 1 + (rand() % 3 + 1));
 		_enemy[i].setLife(1);
 	}
 }
@@ -230,7 +235,7 @@ int		Game::_checkPHit(int x, int y) {
 }
 
 void		Game::moveBullets(void) {
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < this->_ammoPouch; i++) {
 		if (this->_bullet[i].checkLife()) {
 			this->_bullet[i].clearBullet();
 			this->_bullet[i].moveUp();
@@ -284,15 +289,19 @@ void		Game::moveEnemyBullets(void) {
 
 int			Game::bulletCount(void) {
 	int x = 0;
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < this->_ammoPouch; i++) {
 		if (!this->_bullet[i].checkLife())
 			x++;
 	}
 	return (x);
 }
 
+int			Game::maxBulletCount(void) {
+	return (this->_ammoPouch);
+}
+
 void		Game::playerBullet(void) {
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < this->_ammoPouch; i++) {
 		if (!this->_bullet[i].checkLife()) {
 			this->_bullet[i].setInfo(_player.getX(), _player.getY(), 1);
 			return;

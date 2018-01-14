@@ -55,6 +55,7 @@ class	Game {
 		void	setEndgame(int i);
 
 		int		bulletCount(void);
+		int		maxBulletCount(void);
 
 	private:
 
@@ -77,6 +78,7 @@ class	Game {
 
 		int		_score;
 		int		_level;
+		int		_ammoPouch;
 
 		int		_bspd;
 

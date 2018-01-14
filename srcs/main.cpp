@@ -76,20 +76,7 @@ int		space_invader(void) {
 	int		y, x, cnt = 0;
 
     while(game->checkEndgame() == 1) {
-        mvprintw(0, 0, "[SCORE  %d]", game->getScore());
-        mvprintw(col - 1, 0, "[LIVES %d | LEVEL %d | TIME %d | BULLETS (%d/16)]",
-		game->getLife(), game->getLevel(), timer.getSec(clock()), game->bulletCount());
-        if ((c = getch()) != ERR)
-            game->getInput(c);
-        if (cnt % 5000 == 0)
-            game->moveBullets();
-        if (cnt % 6500 == 0)
-            game->moveEnemyBullets();
-        if (cnt % 15000 == 0)
-        	game->moveEnemies();
-        if (cnt % 11500 == 0)
-            game->enemyBullet();
-		if (cnt % 11500 == 0) {
+    	if (cnt % 11500 == 0) {
 			if ((y = col - rand()%col) >= (col - 1))
 				y = y - 3;
 			if ((x = row - rand()%row) >= (row - 1))
@@ -105,6 +92,19 @@ int		space_invader(void) {
 				mvprintw(y, x, " ");
 			}
 		}
+        mvprintw(0, 0, "[SCORE  %d]", game->getScore());
+        mvprintw(col - 1, 0, "[LIVES %d | LEVEL %d | TIME %d | BULLETS (%d/%d)]",
+		game->getLife(), game->getLevel(), timer.getSec(clock()), game->bulletCount(), game->maxBulletCount());
+        if ((c = getch()) != ERR)
+            game->getInput(c);
+        if (cnt % 5000 == 0)
+            game->moveBullets();
+        if (cnt % 6500 == 0)
+            game->moveEnemyBullets();
+        if (cnt % 15000 == 0)
+        	game->moveEnemies();
+        if (cnt % 11500 == 0)
+            game->enemyBullet();
 		curr_time = timer.checkTime(clock());
 		cnt++;
 		if (cnt > 100000000) cnt = 0;
