@@ -33,7 +33,7 @@ int			Alien::movement(int map, int end) {
 	float prob = 1.0 * rand() / RAND_MAX;
 
 	if (prob < 0.47) {
-		if (this->_x > 1)	moveLeft();
+		if (this->_x > 2)	moveLeft();
 		else				moveRight();
 	}
 	else if (prob < 0.95) {

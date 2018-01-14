@@ -193,7 +193,7 @@ void		Game::getInput(int c) {
 		playerBullet();
 		_player.moveRight();
 	}
-	if ((c == '1') && _player.getX() > 1)
+	if ((c == '1') && _player.getX() > 2)
 	{
 		playerBullet();
 		_player.moveLeft();
@@ -253,7 +253,7 @@ void		Game::moveEnemyBullets(void) {
 			this->_ebullet[i].clearBullet();
 			this->_ebullet[i].moveDown();
 			this->_ebullet[i].shootEBullet();
-			if (this->_ebullet[i].getY() >= (_mapy + 1)) {
+			if (this->_ebullet[i].getY() >= (_mapy - 1)) {
 				this->_ebullet[i].setLife(0);
 				this->_ebullet[i].clearBullet();
 			}
@@ -269,7 +269,7 @@ void		Game::moveEnemyBullets(void) {
 				this->_elitebullet[i].clearBullet();
 				this->_elitebullet[i].eliteDown(i);
 				this->_elitebullet[i].eliteShot();
-				if (this->_elitebullet[i].getY() >= (_mapy + 1)) {
+				if (this->_elitebullet[i].getY() >= (_mapy - 1)) {
 					this->_elitebullet[i].setLife(0);
 					this->_elitebullet[i].clearBullet();
 				}
@@ -280,7 +280,6 @@ void		Game::moveEnemyBullets(void) {
 			}
 		}
 	}
-	// drawPlayer();
 }
 
 int			Game::bulletCount(void) {
@@ -309,7 +308,6 @@ void		Game::enemyBullet(void) {
 		rd = rand();
 		if ((rd % _bspd == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
 			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
-			// _ebullet[i].shootEBullet();
 			return;
 		}
 	}
@@ -320,11 +318,8 @@ void		Game::enemyBullet(void) {
 			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i * 3].checkLife() && !_elitebullet[i * 3 + 1].checkLife() 
 				&& !_elitebullet[i * 3 + 2].checkLife() && _elite[x].checkLife()) {
 					_elitebullet[i * 3].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
-					// _elitebullet[i * 3].eliteShot();
 					_elitebullet[i * 3 + 1].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
-					// _elitebullet[i * 3 + 1].eliteShot();
 					_elitebullet[i * 3 + 2].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
-					// _elitebullet[i * 3 + 2].eliteShot();
 					return;
 			}
 		}
