@@ -27,6 +27,7 @@ class	Alien : public Enemy {
 
 		int		movement(void);
 		int		isAlive(void);
+		
 };
 
 #endif

@@ -51,9 +51,9 @@ int main(){
         mvprintw(0, 50, "LIVES  %d", game->getLife());
         if ((c = getch()) != ERR)
             game->getInput(c);
-        if (cnt % 3000 == 0)
+        if (cnt % 4000 == 0)
             game->moveBullets();
-        if (cnt % 6000 == 0) {
+        if (cnt % 8000 == 0) {
             game->moveEnemies();
             game->enemyBullet();
         }

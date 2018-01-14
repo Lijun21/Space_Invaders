@@ -27,6 +27,7 @@ class	Enemy {
 		Enemy &operator=(Enemy const &r);
 
 		void		setPos(int x, int y);
+		void		setLife(int i);
 
 		int			getX(void);
 		int			getY(void);

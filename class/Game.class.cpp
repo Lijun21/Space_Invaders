@@ -15,6 +15,7 @@
 Game::Game(void) : _endgame(1) {
 	this->_bullet = new Bullet[16];
 	this->_ebullet = new Bullet[10];
+	this->_bspd = 34;
 	spawnEnemy();
 	spawnPlayer();
 }
@@ -43,15 +44,17 @@ int			Game::checkEndgame(void) {
 }
 
 void		Game::spawnEnemy(void) {
+	if (this->_bspd > 4)
+		this->_bspd -= 4;
 	for (int i = 0; i < 10; i++) {
-		_enemy[i].setPos((rand() % 30 + 3), (rand() % 3 + 1));
-		attron(A_STANDOUT | A_UNDERLINE);
-		mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
-		attroff(A_STANDOUT | A_UNDERLINE);
+		_enemy[i].setPos(1 + (rand() % 30 + 3), (rand() % 3 + 1));
+		_enemy[i].setLife(1);
 	}
 }
 
 void		Game::moveEnemies(void) {
+	_death = 0;
+
 	for (int i = 0; i < 10; i++){
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), " ");
 		}
@@ -66,7 +69,11 @@ void		Game::moveEnemies(void) {
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
 			attroff(COLOR_PAIR(2));
 		}
+		if (!_enemy[i].checkLife())
+			_death++;
     }
+    if (_death == 10)
+    	spawnEnemy();
     drawPlayer();
 }
 
@@ -80,6 +87,7 @@ void		Game::drawPlayer(void) {
 	mvaddch(_player.getY(), _player.getX(), '^');
 	attroff(COLOR_PAIR(1));
 	drawEnemy();
+	box(stdscr, 0, 0);
 	refresh();
 }
 
@@ -90,7 +98,7 @@ void		Game::drawEnemy(void) {
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
 			attroff(COLOR_PAIR(2));
 		}
-    }	
+    }
 }
 
 void		Game::getInput(int c) {
@@ -103,7 +111,7 @@ void		Game::getInput(int c) {
 		mvaddch(_player.getY(), _player.getX(), ' ');
 	if (c == KEY_RIGHT)
 		_player.moveRight();
-	if (c == KEY_LEFT)
+	if (c == KEY_LEFT && _player.getX() > 1)
 		_player.moveLeft();
 	drawPlayer();
 }
@@ -114,7 +122,7 @@ int		Game::_checkHit(int x, int y) {
 			_score = _score + 1;
 			return (1);
 		}
-	}
+	};
 	return (0);
 }
 
@@ -176,7 +184,7 @@ void		Game::enemyBullet(void) {
 
 	for (int i = 0; i < 10; i++) {
 		rd = rand();
-		if ((rd % 25 == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
+		if ((rd % _bspd == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
 			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
 			_ebullet[i].shootEBullet();
 			return;

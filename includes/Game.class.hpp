@@ -49,6 +49,7 @@ class	Game {
 		int		_checkHit(int x, int y);
 		int		_checkPHit(int x, int y);
 
+		int		_death;
 		int		_input;
 		Alien 	_enemy[10];
 		Player	_player;
@@ -57,6 +58,8 @@ class	Game {
 		Bullet	*_ebullet;
 
 		int		_score;
+
+		int		_bspd;
 
 };
 

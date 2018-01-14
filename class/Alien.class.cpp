@@ -33,7 +33,7 @@ int			Alien::movement(void) {
 	float prob = 1.0 * rand() / RAND_MAX;
 
 	if (prob < 0.45) {
-		if (this->_x > 0)	moveLeft();
+		if (this->_x > 1)	moveLeft();
 		else				moveRight();
 	}
 	else if (prob < 0.9) {
@@ -41,8 +41,12 @@ int			Alien::movement(void) {
 		else				moveLeft();
 	}
 	else {
-		if (this->_y < 20)	moveDown();
-		else				{ this->_life = 0; return (1); }
+		if (this->_y < 19)	moveDown();
+		else { 
+			this->_life = 0;
+			mvprintw(this->_y, this->_x, " ");
+			return (1);
+		}
 	}
 	return (0);
 }

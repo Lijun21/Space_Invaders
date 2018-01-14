@@ -72,3 +72,7 @@ int			Enemy::isHit(int x, int y) {
 int			Enemy::checkLife(void) {
 	return (this->_life);
 }
+
+void		Enemy::setLife(int i) {
+	this->_life = i;
+}
