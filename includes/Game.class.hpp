@@ -65,7 +65,6 @@ class	Game {
 		int		_input;
 		Alien 	*_enemy;
 		Elite	*_elite;
-		Alien	*_boss;
 		Player	_player;
 		int		_endgame;
 

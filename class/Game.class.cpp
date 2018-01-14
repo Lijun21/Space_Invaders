@@ -42,8 +42,8 @@ Game::~Game(void) {
 	delete [] this->_bullet;
 	delete [] this->_ebullet;
 	delete [] this->_enemy;
-	delete [] this->_elite;
-	delete [] this->_boss;
+	if (this->_eElite > 0)
+		delete [] this->_elite;
 }
 
 Game &Game::operator=(Game const &r) {
@@ -70,7 +70,7 @@ void		Game::spawnEnemy(void) {
 		this->_elite = new Elite[this->_eElite];
 		this->_elitebullet = new Bullet[this->_eElite * 3];
 		for (int i = 0; i < this->_eElite; i++) {
-			_elite[i].setPos(1 + (rand() % _mapx + 3), (rand() % 3 + 1));
+			_elite[i].setPos(2 + (rand() % _mapx + 3), (rand() % 3 + 1));
 			_elite[i].setLife(25);
 		}
 	}
@@ -90,7 +90,7 @@ void		Game::spawnEnemy(void) {
 	if (this->_bspd > 4)
 		this->_bspd -= 4;
 	for (int i = 0; i < this->_eCount; i++) {
-		_enemy[i].setPos(1 + (rand() % _mapx + 3), (rand() % 3 + 1));
+		_enemy[i].setPos(2 + (rand() % _mapx + 3), (rand() % 3 + 1));
 		_enemy[i].setLife(1);
 	}
 }

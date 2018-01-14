@@ -144,6 +144,6 @@ int		main() {
 		{
 			clear();
 			return (0);
-		}
+		};
 	}
 }
