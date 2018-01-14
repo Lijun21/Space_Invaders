@@ -77,8 +77,8 @@ int		space_invader(void) {
 
     while(game->checkEndgame() == 1) {
         mvprintw(0, 0, "[SCORE  %d]", game->getScore());
-        mvprintw(col - 1, 0, "[LIVES %d | LEVEL %d | TIME %d]",
-		game->getLife(), game->getLevel(), timer.getSec(clock()));
+        mvprintw(col - 1, 0, "[LIVES %d | LEVEL %d | TIME %d | BULLETS (%d/16)]",
+		game->getLife(), game->getLevel(), timer.getSec(clock()), game->bulletCount());
         if ((c = getch()) != ERR)
             game->getInput(c);
         if (cnt % 5000 == 0)

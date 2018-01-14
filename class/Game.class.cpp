@@ -283,6 +283,15 @@ void		Game::moveEnemyBullets(void) {
 	// drawPlayer();
 }
 
+int			Game::bulletCount(void) {
+	int x = 0;
+	for (int i = 0; i < 16; i++) {
+		if (!this->_bullet[i].checkLife())
+			x++;
+	}
+	return (x);
+}
+
 void		Game::playerBullet(void) {
 	for (int i = 0; i < 16; i++) {
 		if (!this->_bullet[i].checkLife()) {

@@ -54,6 +54,8 @@ class	Game {
 
 		void	setEndgame(int i);
 
+		int		bulletCount(void);
+
 	private:
 
 		int		_checkHit(int x, int y);
