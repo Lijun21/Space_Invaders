@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*    Bullet.class.hpp       _             _              :::      ::::::::   */
+/*    Elite.class.hpp        _             _              :::      ::::::::   */
 /*    By: mlu               | |           | |           :+:      :+:    :+:   */
 /*     ___  __ _  __ _ _ __ | | __ _ _ __ | |_        +:+ +:+         +:+     */
 /*    / _ \/ _` |/ _` | '_ \| |/ _` | '_ \| __|     +/+  +:+       +/+        */
@@ -10,43 +10,26 @@
 /*         |___/ |___/|_|                                                     */
 /* ************************************************************************** */
 
-#ifndef BULLET_H
-# define BULLET_H
+#ifndef ELITE_H
+# define ELITE_H
 
 # include <Space.Invaders.hpp>
 
-class	Bullet {
+class	Elite : public Enemy {
 
 	public:
 
-		Bullet(void);
-		Bullet(int x, int y);
-		Bullet(Bullet &obj);
-		virtual ~Bullet(void);
-		Bullet &operator=(Bullet const &r);
+		Elite(void);
+		Elite(int x, int y);
+		Elite(Elite &obj);
+		virtual ~Elite(void);
+		Elite &operator=(Elite const &r);
 
-		int			getX(void);
-		int			getY(void);
-		int			checkLife(void);
-
-		void		moveDown(void);
-		void		moveUp(void);
-
-		void		shootBullet(void);
-		void		shootEBullet(void);
-		void		clearBullet(void);
-
-		void		eliteShot(void);
-		void		eliteDown(int i);
-
-		void		setLife(int i);
-		void		setInfo(int x, int y, int life);
-
-	protected:
-		int		_x;
-		int		_y;
-		int		_type;
-		int		_life;
+		int		moveElite(int map, int end);
+		void	clearElite(void);
+		void	drawElite(void);
+		int		isAlive(void);	
+		int		isEHit(int x, int y);
 
 };
 

@@ -30,6 +30,7 @@ class	Game {
 
 		void	spawnEnemy(void);
 		void	moveEnemies(void);
+		void	clearMove(void);
 
 		void	spawnPlayer(void);
 		void	movePlayer(void);
@@ -60,10 +61,14 @@ class	Game {
 		int		_death;
 		int		_input;
 		Alien 	*_enemy;
+		Elite	*_elite;
+		Alien	*_boss;
 		Player	_player;
 		int		_endgame;
+
 		Bullet	*_bullet;
 		Bullet	*_ebullet;
+		Bullet	*_elitebullet;
 
 		int		_mapx;
 		int		_mapy;
@@ -75,6 +80,8 @@ class	Game {
 
 		int		_menu;
 
+		int		_eElite;
+		int		_eBoss;
 		int		_eCount;
 		int		_eBullet;
 

@@ -23,6 +23,8 @@
 # include <Alien.class.hpp>
 # include <Bullet.class.hpp>
 # include <Player.class.hpp>
+# include <Elite.class.hpp>
 # include <Game.class.hpp>
+// # include <Boss.class.hpp>
 
 #endif

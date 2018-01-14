@@ -50,6 +50,25 @@ void		Bullet::shootEBullet(void) {
 	attroff(COLOR_PAIR(3));
 }
 
+void		Bullet::eliteShot(void) {
+	attron(COLOR_PAIR(5));
+	mvprintw(_y, _x, "o");
+	attroff(COLOR_PAIR(5));
+}
+
+void		Bullet::eliteDown(int i) {
+	if (i % 3 == 0)
+		this->_y++;
+	else if (i % 3 == 1) {
+		this->_y++;
+		this->_x--;
+	}
+	else {
+		this->_y++;
+		this->_x++;
+	}
+}
+
 void		Bullet::shootBullet(void) {
 	mvprintw(_y, _x, ".");
 }

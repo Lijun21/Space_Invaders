@@ -15,10 +15,14 @@
 Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_eCount = 8;
 	this->_eBullet = 8;
+	this->_eElite = 0;
 
 	this->_bullet = new Bullet[16];
 	this->_ebullet = new Bullet[this->_eBullet];
 	this->_enemy = new Alien[this->_eCount];
+
+	this->_elite = new Elite[this->_eElite];
+	this->_elitebullet = new Bullet[this->_eElite * 3];
 
 	this->_score = 0;
 	this->_bspd = 34;
@@ -38,6 +42,8 @@ Game::~Game(void) {
 	delete [] this->_bullet;
 	delete [] this->_ebullet;
 	delete [] this->_enemy;
+	delete [] this->_elite;
+	delete [] this->_boss;
 }
 
 Game &Game::operator=(Game const &r) {
@@ -57,6 +63,20 @@ int			Game::checkEndgame(void) {
 void		Game::spawnEnemy(void) {
 	clear();
 
+	if (this->_level % 3 == 0)
+	{
+		delete [] this->_elite;
+		this->_eElite = (this->_level / 3);
+		this->_elite = new Elite[this->_eElite];
+		this->_elitebullet = new Bullet[this->_eElite * 3];
+		for (int i = 0; i < this->_eElite; i++) {
+			_elite[i].setPos(1 + (rand() % _mapx + 3), (rand() % 3 + 1));
+			_elite[i].setLife(25);
+		}
+	}
+	else
+		this->_eElite = 0;
+
 	delete [] this->_ebullet;
 	delete [] this->_enemy;
 
@@ -75,19 +95,27 @@ void		Game::spawnEnemy(void) {
 	}
 }
 
+void		Game::clearMove(void) {
+	for (int i = 0; i < this->_eCount; i++){
+			mvprintw(_enemy[i].getY(), _enemy[i].getX(), " ");
+	}
+	if (this->_eElite > 0) {
+		for (int i = 0; i < this->_eElite; i++){
+			_elite[i].clearElite();
+		}
+	}
+}
+
 void		Game::moveEnemies(void) {
 	_death = 0;
 
-	for (int i = 0; i < this->_eCount; i++){
-			mvprintw(_enemy[i].getY(), _enemy[i].getX(), " ");
-		}
+	clearMove();
 	for (int i = 0; i < this->_eCount; i++){
 		if (_enemy[i].checkLife()) {
 			if(_enemy[i].movement(_mapy, _mapx)) {
 				if(_player.loseLife())
 					_endgame = 0;
 			}
-			init_pair(2, COLOR_RED, COLOR_BLACK);
 			attron(COLOR_PAIR(2));
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
 			attroff(COLOR_PAIR(2));
@@ -95,7 +123,20 @@ void		Game::moveEnemies(void) {
 		if (!_enemy[i].checkLife())
 			_death++;
     }
-    if (_death == this->_eCount)
+    if (_eElite > 0) {
+		for (int i = 0; i < _eElite; i++){
+			if (_elite[i].checkLife()) {
+				if(_elite[i].moveElite(_mapy, _mapx)) {
+					if(_player.loseLife())
+						_endgame = 0;
+				}
+				_elite[i].drawElite();
+			}
+			if (!_elite[i].checkLife())
+				_death++;
+		}
+	}
+    if (_death == (_eCount + _eElite))
     	spawnEnemy();
     drawPlayer();
 }
@@ -122,6 +163,12 @@ void		Game::drawEnemy(void) {
 			attroff(COLOR_PAIR(2));
 		}
     }
+    if (_eElite > 0) {
+		for (int i = 0; i < _eElite; i++){
+			if (_elite[i].checkLife())
+				_elite[i].drawElite();
+		}
+	}
 }
 
 void		Game::getInput(int c) {
@@ -155,7 +202,15 @@ int		Game::_checkHit(int x, int y) {
 			_score = _score + 1;
 			return (1);
 		}
-	};
+	}
+	if (this->_eElite > 0) {
+		for (int i = 0; i < this->_eElite; i++){
+			if (_elite[i].checkLife() && _elite[i].isEHit(x, y)) {
+				_score = _score + 1;
+				return (1);
+			}
+		}
+	}
 	return (0);
 }
 
@@ -200,6 +255,23 @@ void		Game::moveBullets(void) {
 			}
 		}
 	}	
+	if (this->_eElite > 0) {
+		for (int i = 0; i < (_eElite * 3); i++) {
+			if (this->_elitebullet[i].checkLife()) {
+				this->_elitebullet[i].clearBullet();
+				this->_elitebullet[i].eliteDown(i);
+				this->_elitebullet[i].eliteShot();
+				if (this->_elitebullet[i].getY() >= (_mapy + 1)) {
+					this->_elitebullet[i].setLife(0);
+					this->_elitebullet[i].clearBullet();
+				}
+				if (_checkPHit(this->_elitebullet[i].getX(), this->_elitebullet[i].getY())) {
+					this->_elitebullet[i].setLife(0);
+					this->_elitebullet[i].clearBullet();
+				}
+			}
+		}
+	}
 	drawPlayer();
 }
 
@@ -214,6 +286,7 @@ void		Game::playerBullet(void) {
 
 void		Game::enemyBullet(void) {
 	int rd = 0;
+	int x = -1;
 
 	for (int i = 0; i < _eBullet; i++) {
 		rd = rand();
@@ -221,6 +294,21 @@ void		Game::enemyBullet(void) {
 			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
 			_ebullet[i].shootEBullet();
 			return;
+		}
+	}
+	if (_eElite > 0)
+	{
+		for (int i = 0; i < _eElite; i++) {
+			x++;
+			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i].checkLife() && _elite[x].checkLife()) {
+					_elitebullet[i * 3].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
+					_elitebullet[i * 3].eliteShot();
+					_elitebullet[i * 3 + 1].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
+					_elitebullet[i * 3 + 1].eliteShot();
+					_elitebullet[i * 3 + 2].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
+					_elitebullet[i * 3 + 2].eliteShot();
+					return;
+			}
 		}
 	}
 }
