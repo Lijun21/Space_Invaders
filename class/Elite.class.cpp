@@ -37,8 +37,10 @@ int			Elite::isEHit(int x, int y) {
 			((this->_x + 1) == (x + i) && this->_y == y))
 		{
 			this->_life--;
-				if (this->_life == 0)
+				if (this->_life == 0) {
+					system("afplay sound/boss_death.mp3 &");
 					return (1);
+				}
 			return (1);
 		}
 	}

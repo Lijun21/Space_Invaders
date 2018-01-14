@@ -28,7 +28,7 @@ Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_score = 0;
 	this->_bspd = 34;
 	this->_death = 0;
-	this->_level = 6;
+	this->_level = 0;
 
 	spawnEnemy();
 	spawnPlayer();
@@ -64,8 +64,10 @@ int			Game::checkEndgame(void) {
 void		Game::spawnEnemy(void) {
 	clear();
 
+	system("afplay sound/respawn.mp3 &");
 	if (this->_level % 3 == 0)
 	{
+		system("afplay sound/respawn2.mp3 &");
 		this->_player.setLife(this->_player.checkLife() + 1);
 		delete [] this->_elite;
 		this->_eElite = (this->_level / 3);
@@ -181,6 +183,9 @@ void		Game::drawEnemy(void) {
 void		Game::getInput(int c) {
 	int a = 0;
 
+	if (c == 27) {
+		setEndgame(0);
+	}
 	if (c == ' ')
 		playerBullet();
 	if (c == KEY_RIGHT || c == KEY_LEFT || c == '6' || c == '4'
@@ -226,6 +231,7 @@ int		Game::_checkHit(int x, int y) {
 
 int		Game::_checkPHit(int x, int y) {
 	if (_player.isHit(x, y)) {
+		system("afplay sound/death.mp3 &");
 		if(_player.bulletHit()) {
 			_endgame = 0;
 		}
@@ -245,6 +251,7 @@ void		Game::moveBullets(void) {
 				this->_bullet[i].clearBullet();
 			}
 			if (_checkHit(this->_bullet[i].getX(), this->_bullet[i].getY())) {
+				system("afplay sound/hit.mp3 &");
 				this->_bullet[i].setLife(0);
 				this->_bullet[i].clearBullet();
 			}
@@ -301,11 +308,19 @@ int			Game::maxBulletCount(void) {
 }
 
 void		Game::playerBullet(void) {
+	static int	empty = 0;
+
 	for (int i = 0; i < this->_ammoPouch; i++) {
 		if (!this->_bullet[i].checkLife()) {
+			system("afplay sound/hit2.mp3 &");
+			empty = 0;
 			this->_bullet[i].setInfo(_player.getX(), _player.getY(), 1);
 			return;
 		}
+	}
+	if (empty < 5) {
+		system("afplay sound/empty.mp3 &");
+		empty++;
 	}
 }
 
@@ -324,8 +339,11 @@ void		Game::enemyBullet(void) {
 	{
 		for (int i = 0; i < _eElite; i++) {
 			x++;
-			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i * 3].checkLife() && !_elitebullet[i * 3 + 1].checkLife() 
-				&& !_elitebullet[i * 3 + 2].checkLife() && _elite[x].checkLife()) {
+			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i * 3].checkLife()
+				&& !_elitebullet[i * 3 + 1].checkLife() 
+				&& !_elitebullet[i * 3 + 2].checkLife()
+				&& _elite[x].checkLife()) {
+					system("afplay sound/yamato.mp3 &");
 					_elitebullet[i * 3].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
 					_elitebullet[i * 3 + 1].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
 					_elitebullet[i * 3 + 2].setInfo(_elite[x].getX(), _elite[x].getY(), 1);

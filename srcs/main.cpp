@@ -6,7 +6,7 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/14 00:37:12 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/14 01:07:22 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		space_invader(void) {
     delwin(menu);
 
 	system("afplay sound/tara.mp3 &");
-	system("afplay sound/bgm.mp3 &");
+//	system("afplay sound/bgm.mp3 &");
 
 	Timer	timer(clock());
 	int		curr_time = timer.checkTime(clock());
@@ -115,7 +115,8 @@ int		space_invader(void) {
 		if (cnt > 100000000) cnt = 0;
     }
 
-	system("killall afplay && afplay sound/gameover.mp3 &");
+	system("killall afplay");
+	system("afplay sound/gameover.mp3 &");
 
     WINDOW *end = newwin(7, 16, (col/2 - 3), (row/2) - 8);
     while (!game->checkEndgame()) {
