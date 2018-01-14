@@ -6,7 +6,7 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/13 22:53:00 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/13 23:24:58 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		space_invader(void) {
 
 	Timer	timer(clock());
 	int		curr_time = timer.checkTime(clock());
-	int		y, x;
+	int		y, x, cnt = 0;
 
     while(game->checkEndgame() == 1) {
         mvprintw(0, 0, "SCORE  %d", game->getScore());
@@ -81,13 +81,13 @@ int		space_invader(void) {
 		game->getLife(), game->getLevel(), timer.getSec(clock()));
         if ((c = getch()) != ERR)
             game->getInput(c);
-        if (curr_time % 52 == 0)
+        if (cnt % 5000 == 0)
             game->moveBullets();
-        if (curr_time % 203 == 0)
+        if (cnt % 6500 == 0)
             game->moveEnemyBullets();
-        if (curr_time % 151 == 0)
+        if (cnt % 15000 == 0)
         	game->moveEnemies();
-        if (curr_time % 203 == 0)
+        if (cnt % 11500 == 0)
             game->enemyBullet();
 		// if (curr_time % 5578 == 0) {
 		// 	if ((y = col - rand()%col) >= (col - 1))
@@ -106,6 +106,8 @@ int		space_invader(void) {
 		// 	}
 		// }
 		curr_time = timer.checkTime(clock());
+		cnt++;
+		if (cnt > 100000000) cnt = 0;
     }
     WINDOW *end = newwin(7, 16, (col/2 - 3), (row/2) - 8);
     while (!game->checkEndgame()) {
