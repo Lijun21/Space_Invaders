@@ -40,7 +40,10 @@ int			Player::bulletHit(void) {
 
 	this->_life--;
 	if (this->_life == 0 || (this->_life <= -1 && i >= 4))
+	{
+		i = 0;
 		return (1);
+	}
 	if (this->_life <= -1)
 	{
 		this->_life = this->_life + 5 - i;

@@ -292,6 +292,7 @@ void		Game::moveEnemyBullets(void) {
 			}
 		}
 	}
+	box(stdscr, 0, 0);
 }
 
 int			Game::bulletCount(void) {
@@ -331,7 +332,7 @@ void		Game::enemyBullet(void) {
 	for (int i = 0; i < _eBullet; i++) {
 		rd = rand();
 		if ((rd % _bspd == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
-			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
+			_ebullet[i].setInfo(_enemy[i].getX() + x, _enemy[i].getY(), 1);
 			return;
 		}
 	}

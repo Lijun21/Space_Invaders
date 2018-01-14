@@ -74,7 +74,7 @@ int		space_invader(void) {
     delwin(menu);
 
 	system("afplay sound/tara.mp3 &");
-//	system("afplay sound/bgm.mp3 &");
+	system("afplay sound/bgm.mp3 &");
 
 	Timer	timer(clock());
 	int		curr_time = timer.checkTime(clock());
