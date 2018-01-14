@@ -6,7 +6,7 @@
 #    By: mikim <mikim@student.42.us.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/12 22:56:20 by mikim             #+#    #+#              #
-#    Updated: 2018/01/13 23:43:02 by mikim            ###   ########.fr        #
+#    Updated: 2018/01/14 14:41:16 by mikim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,14 +49,14 @@ all: $(NAME)
 
 $(OBJDIR)%.o: $(SRCDIR)%.cpp
 	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAG) $(HEADER) $< -o $@
+	@$(CC) $(CFLAG) $(WFLAG) $(HEADER) $< -o $@
 
 $(OBJDIR_CLASS)%.o: $(SRCDIR_CLASS)%.cpp
 	@mkdir -p $(OBJDIR_CLASS)
-	@$(CC) $(CFLAG) $(HEADER) $< -o $@
+	@$(CC) $(CFLAG) $(WFLAG) $(HEADER) $< -o $@
 
 $(NAME): $(OBJS) $(OBJS_CLASS)
-	@$(CC) $(OBJS) $(OBJS_CLASS) $(HEADER) $(LIBS) -o $@
+	@$(CC) $(WFLAG) $(OBJS) $(OBJS_CLASS) $(HEADER) $(LIBS) -o $@
 	@echo "\x1b[32;1m[space.invaders - 모래반지 빵야빵야!]\x1b[0m"
 
 clean:
