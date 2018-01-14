@@ -6,7 +6,7 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/13 16:01:21 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/13 22:47:30 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int		space_invader(void) {
 
     int col = 0;
     int row = 0;
-    int x, y;
     getmaxyx(stdscr, col, row);
 
     Game *game = new Game(row - 2, col - 2);
@@ -43,14 +42,12 @@ int		space_invader(void) {
     nodelay(stdscr, TRUE);
 
     int c;
-	int cnt;
 	start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 	init_pair(2, COLOR_RED, COLOR_BLACK);
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(4, COLOR_GREEN, COLOR_BLACK);
 	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
-	init_pair(6, COLOR_BLUE, COLOR_BLACK);
     refresh();
 
     WINDOW *menu = newwin(7, 11, (col/2 - 3), (row/2) - 5);
@@ -72,36 +69,40 @@ int		space_invader(void) {
     }
     clear();
     delwin(menu);
+
+	Timer	timer(clock());
+	int		curr_time = timer.checkTime(clock());
+	int		y, x;
+
     while(game->checkEndgame() == 1) {
         mvprintw(0, 0, "SCORE  %d", game->getScore());
-        mvprintw(col - 1, 0, "LIVES %d | LEVEL %d", game->getLife(), game->getLevel());
-        if ((c = getch()) != ERR)
+        mvprintw(col - 1, 0, "LIVES %d | LEVEL %d | TIME %d",
+		game->getLife(), game->getLevel(), timer.getSec(clock()));
+        if ((c = getch()) != ERR && curr_time % 25 != 0)
             game->getInput(c);
-        if (cnt % 5000 == 0)
+        if (curr_time % 50 == 0)
             game->moveBullets();
-        if (cnt % 10000 == 0) {
+        if (curr_time % 150 == 0) {
             game->moveEnemies();
             game->enemyBullet();
         }
-        if (cnt % 5500 == 0){
-            if ((y = col - rand()%col) >= (col - 1))
-                y = y - 3;
-            if ((x = row - rand()%row) >= (row - 1))
-                x = x - 3;
-            mvprintw(y, x, "*");
-        }
-        if (cnt % 5400 == 0){
-            for (int i = 1; i< 1000; i++){
-            if ((y = col - rand()%col) >= (col - 1))
-                y = y - 3;
-            if ((x = row - rand()%row) >= (row - 1))
-                x = x - 3;
-            mvprintw(y, x, " ");
-            }
-        }
-		cnt++;
-		if (cnt > 100000000)
-			cnt = 0;
+		if (cnt % 5500 == 0) {
+			if ((y = col - rand()%col) >= (col - 1))
+				y = y - 3;
+			if ((x = row - rand()%row) >= (row - 1))
+				x = x - 3;
+			mvprintw(y, x, "*");
+		}
+		if (cnt % 5400 == 0) {
+			for (int i = 1; i< 1000; i++) {
+				if ((y = col - rand()%col) >= (col - 1))
+					y = y - 3;
+				if ((x = row - rand()%row) >= (row - 1))
+					x = x - 3;
+				mvprintw(y, x, " ");
+			}
+		}
+		curr_time = timer.checkTime(clock());
     }
     WINDOW *end = newwin(7, 16, (col/2 - 3), (row/2) - 8);
     while (!game->checkEndgame()) {
