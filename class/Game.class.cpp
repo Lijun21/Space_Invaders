@@ -61,9 +61,10 @@ void		Game::moveEnemies(void) {
 				if(_player.loseLife())
 					_endgame = 0;
 			}
-			// attron(A_STANDOUT | A_UNDERLINE);
+			init_pair(2, COLOR_RED, COLOR_BLACK);
+			attron(COLOR_PAIR(2));
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
-			// attroff(A_STANDOUT | A_UNDERLINE);
+			attroff(COLOR_PAIR(2));
 		}
     }
     refresh();
@@ -71,9 +72,9 @@ void		Game::moveEnemies(void) {
 
 void		Game::spawnPlayer(void) {
 	_player = Player(25, 20);
-	attron(COLOR_PAIR(1));
+	//attron(COLOR_PAIR(1));
 	mvaddch(_player.getY(), _player.getX(), 'P');
-	attroff(COLOR_PAIR(1));
+	//attroff(COLOR_PAIR(1));
 	refresh();
 }
 
@@ -88,9 +89,11 @@ void		Game::getInput(int c) {
 		_player.moveRight();
 	if (c == KEY_LEFT)
 		_player.moveLeft();
-	// attron(COLOR_PAIR(1));
+	start_color();
+	init_pair(1, COLOR_YELLOW, COLOR_BLACK);
+	attron(COLOR_PAIR(1));
 	mvaddch(_player.getY(), _player.getX(), '^');
-	// attroff(COLOR_PAIR(1));
+	attroff(COLOR_PAIR(1));
 	refresh();
 }
 

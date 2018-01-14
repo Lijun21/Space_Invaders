@@ -6,22 +6,13 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/12 23:59:23 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/13 16:01:21 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Space.Invaders.hpp>
 
 using namespace std;
-
-
-void       player_move(int c, int *x, int *y)
-{
-    if (c == KEY_RIGHT)
-        *x = *x + 1;
-    if (c == KEY_LEFT)
-        *x = *x - 1;
-}
 
 int main(){
     srand(time(NULL));
