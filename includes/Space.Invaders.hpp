@@ -6,7 +6,7 @@
 /*   By: mikim <mikim@student.42.us.org>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 23:39:19 by mikim             #+#    #+#             */
-/*   Updated: 2018/01/12 23:58:32 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/13 22:48:35 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <Bullet.class.hpp>
 # include <Player.class.hpp>
 # include <Elite.class.hpp>
+# include <Timer.class.hpp>
 # include <Game.class.hpp>
 // # include <Boss.class.hpp>
 
