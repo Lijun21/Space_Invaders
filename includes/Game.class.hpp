@@ -41,6 +41,9 @@ class	Game {
 		int		getScore(void);
 		int		getLife(void);
 
+		void	drawPlayer(void);
+		void	drawEnemy(void);
+
 	private:
 
 		int		_checkHit(int x, int y);

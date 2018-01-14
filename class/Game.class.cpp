@@ -67,20 +67,36 @@ void		Game::moveEnemies(void) {
 			attroff(COLOR_PAIR(2));
 		}
     }
-    refresh();
+    drawPlayer();
 }
 
 void		Game::spawnPlayer(void) {
 	_player = Player(25, 20);
-	//attron(COLOR_PAIR(1));
-	mvaddch(_player.getY(), _player.getX(), 'P');
-	//attroff(COLOR_PAIR(1));
+	drawPlayer();
+}
+
+void		Game::drawPlayer(void) {
+	attron(COLOR_PAIR(1));
+	mvaddch(_player.getY(), _player.getX(), '^');
+	attroff(COLOR_PAIR(1));
+	drawEnemy();
 	refresh();
+}
+
+void		Game::drawEnemy(void) {
+	for (int i = 0; i < 10; i++){
+		if (_enemy[i].checkLife()) {
+			attron(COLOR_PAIR(2));
+			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
+			attroff(COLOR_PAIR(2));
+		}
+    }	
 }
 
 void		Game::getInput(int c) {
 	if (c == ' ') {
 		playerBullet();
+		drawPlayer();
 		return;
 	}
 	if (c == KEY_RIGHT || c == KEY_LEFT)
@@ -89,12 +105,7 @@ void		Game::getInput(int c) {
 		_player.moveRight();
 	if (c == KEY_LEFT)
 		_player.moveLeft();
-	start_color();
-	init_pair(1, COLOR_YELLOW, COLOR_BLACK);
-	attron(COLOR_PAIR(1));
-	mvaddch(_player.getY(), _player.getX(), '^');
-	attroff(COLOR_PAIR(1));
-	refresh();
+	drawPlayer();
 }
 
 int		Game::_checkHit(int x, int y) {
@@ -137,7 +148,7 @@ void		Game::moveBullets(void) {
 		if (this->_ebullet[i].checkLife()) {
 			this->_ebullet[i].clearBullet();
 			this->_ebullet[i].moveDown();
-			this->_ebullet[i].shootBullet();
+			this->_ebullet[i].shootEBullet();
 			if (this->_ebullet[i].getY() >= 20) {
 				this->_ebullet[i].setLife(0);
 				this->_ebullet[i].clearBullet();
@@ -148,7 +159,7 @@ void		Game::moveBullets(void) {
 			}
 		}
 	}	
-	refresh();
+	drawPlayer();
 }
 
 void		Game::playerBullet(void) {
@@ -165,8 +176,9 @@ void		Game::enemyBullet(void) {
 
 	for (int i = 0; i < 10; i++) {
 		rd = rand();
-		if ((rd % 15 == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
+		if ((rd % 25 == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
 			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
+			_ebullet[i].shootEBullet();
 			return;
 		}
 	}

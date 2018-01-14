@@ -40,9 +40,10 @@ int main(){
 
     int c;
 	int cnt;
-
-    start_color();
-    init_pair(1, COLOR_BLUE, COLOR_GREEN);
+	start_color();
+	init_pair(1, COLOR_CYAN, COLOR_BLACK);
+	init_pair(2, COLOR_RED, COLOR_BLACK);
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
     refresh();
     while(game->checkEndgame())
     {

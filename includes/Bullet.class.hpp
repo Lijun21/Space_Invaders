@@ -33,6 +33,7 @@ class	Bullet {
 		void		moveUp(void);
 
 		void		shootBullet(void);
+		void		shootEBullet(void);
 		void		clearBullet(void);
 
 		void		setLife(int i);

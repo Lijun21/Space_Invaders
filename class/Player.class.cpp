@@ -36,10 +36,15 @@ int			Player::loseLife(void) {
 	return (0);
 }
 int			Player::bulletHit(void) {
+	static int i = 0;
+
 	this->_life--;
-	if (this->_life == 0)
+	if (this->_life == 0 || (this->_life <= -1 && i >= 4))
 		return (1);
 	if (this->_life <= -1)
-		this->_life += 5;
+	{
+		this->_life = this->_life + 5 - i;
+		i++;
+	}
 	return (0);
 }

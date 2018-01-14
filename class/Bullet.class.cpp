@@ -44,6 +44,12 @@ void		Bullet::moveUp(void) {
 	this->_y--;
 }
 
+void		Bullet::shootEBullet(void) {
+	attron(COLOR_PAIR(3));
+	mvprintw(_y, _x, "v");
+	attroff(COLOR_PAIR(3));
+}
+
 void		Bullet::shootBullet(void) {
 	mvprintw(_y, _x, ".");
 }
