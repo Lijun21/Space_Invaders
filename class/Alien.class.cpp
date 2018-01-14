@@ -29,7 +29,7 @@ Alien &Alien::operator=(Alien const &r) {
 	return (*this);
 }
 
-int			Alien::movement(void) {
+int			Alien::movement(int map, int end) {
 	float prob = 1.0 * rand() / RAND_MAX;
 
 	if (prob < 0.45) {
@@ -37,11 +37,11 @@ int			Alien::movement(void) {
 		else				moveRight();
 	}
 	else if (prob < 0.9) {
-		if (this->_x < 50)	moveRight();
+		if (this->_x < end)	moveRight();
 		else				moveLeft();
 	}
 	else {
-		if (this->_y < 19)	moveDown();
+		if (this->_y < (map - 1))	moveDown();
 		else { 
 			this->_life = 0;
 			mvprintw(this->_y, this->_x, " ");

@@ -17,23 +17,16 @@ using namespace std;
 int main(){
     srand(time(NULL));
 
-    Game *game = new Game();
-
-    int gamespeed = 400;
-
-    int score = 0;
-    int lives = 5;
-    int randam_enemies_x;
-    int randam_enemies_y;
-
-    char enemies[10][2];
-
     initscr();//creates std screen
     cbreak();//enter raw modal
     noecho();
     curs_set(0);
 
-    // addch('a');
+    int col = 0;
+    int row = 0;
+    getmaxyx(stdscr, col, row);
+
+    Game *game = new Game(row - 2, col - 2);
 
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
@@ -51,9 +44,9 @@ int main(){
         mvprintw(0, 50, "LIVES  %d", game->getLife());
         if ((c = getch()) != ERR)
             game->getInput(c);
-        if (cnt % 4000 == 0)
+        if (cnt % 5000 == 0)
             game->moveBullets();
-        if (cnt % 8000 == 0) {
+        if (cnt % 10000 == 0) {
             game->moveEnemies();
             game->enemyBullet();
         }

@@ -12,7 +12,7 @@
 
 #include <Space.Invaders.hpp>
 
-Game::Game(void) : _endgame(1) {
+Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(1) {
 	this->_bullet = new Bullet[16];
 	this->_ebullet = new Bullet[10];
 	this->_bspd = 34;
@@ -44,10 +44,11 @@ int			Game::checkEndgame(void) {
 }
 
 void		Game::spawnEnemy(void) {
+	clear();
 	if (this->_bspd > 4)
 		this->_bspd -= 4;
 	for (int i = 0; i < 10; i++) {
-		_enemy[i].setPos(1 + (rand() % 30 + 3), (rand() % 3 + 1));
+		_enemy[i].setPos(1 + (rand() % _mapx + 3), (rand() % 3 + 1));
 		_enemy[i].setLife(1);
 	}
 }
@@ -60,7 +61,7 @@ void		Game::moveEnemies(void) {
 		}
 	for (int i = 0; i < 10; i++){
 		if (_enemy[i].checkLife()) {
-			if(_enemy[i].movement()) {
+			if(_enemy[i].movement(_mapy, _mapx)) {
 				if(_player.loseLife())
 					_endgame = 0;
 			}
@@ -78,7 +79,7 @@ void		Game::moveEnemies(void) {
 }
 
 void		Game::spawnPlayer(void) {
-	_player = Player(25, 20);
+	_player = Player(25, _mapy);
 	drawPlayer();
 }
 
@@ -109,7 +110,7 @@ void		Game::getInput(int c) {
 	}
 	if (c == KEY_RIGHT || c == KEY_LEFT)
 		mvaddch(_player.getY(), _player.getX(), ' ');
-	if (c == KEY_RIGHT)
+	if (c == KEY_RIGHT && _player.getX() < _mapx)
 		_player.moveRight();
 	if (c == KEY_LEFT && _player.getX() > 1)
 		_player.moveLeft();
@@ -157,7 +158,7 @@ void		Game::moveBullets(void) {
 			this->_ebullet[i].clearBullet();
 			this->_ebullet[i].moveDown();
 			this->_ebullet[i].shootEBullet();
-			if (this->_ebullet[i].getY() >= 20) {
+			if (this->_ebullet[i].getY() >= _mapy) {
 				this->_ebullet[i].setLife(0);
 				this->_ebullet[i].clearBullet();
 			}

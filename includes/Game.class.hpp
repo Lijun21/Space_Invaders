@@ -20,6 +20,7 @@ class	Game {
 	public:
 
 		Game(void);
+		Game(int x, int y);
 		Game(Game &obj);
 		virtual ~Game(void);
 		Game &operator=(Game const &r);
@@ -56,6 +57,9 @@ class	Game {
 		int		_endgame;
 		Bullet	*_bullet;
 		Bullet	*_ebullet;
+
+		int		_mapx;
+		int		_mapy;
 
 		int		_score;
 
