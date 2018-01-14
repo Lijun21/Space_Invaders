@@ -6,7 +6,7 @@
 #    By: mikim <mikim@student.42.us.org>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/12 22:56:20 by mikim             #+#    #+#              #
-#    Updated: 2018/01/13 22:25:16 by mikim            ###   ########.fr        #
+#    Updated: 2018/01/13 23:43:02 by mikim            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ CC = g++
 CFLAG = -c
 WFLAG = -Wall -Wextra -Werror
 
-NAME = space.invaders
+NAME = ft_retro
 
 .PHONY: all clean fclean re
 .SUFFIXES: .c .o
