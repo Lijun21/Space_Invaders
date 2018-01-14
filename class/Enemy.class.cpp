@@ -61,7 +61,9 @@ void		Enemy::moveDown(void) {
 }
 
 int			Enemy::isHit(int x, int y) {
-	if (this->_x == x && this->_y == y)
+	if ((this->_x == x && this->_y == y) ||
+		((this->_x - 1) == x && this->_y == y) ||
+		((this->_x + 1) == x && this->_y == y))
 	{
 		this->_life = 0;
 		return (1);

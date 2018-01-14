@@ -32,11 +32,11 @@ Alien &Alien::operator=(Alien const &r) {
 int			Alien::movement(int map, int end) {
 	float prob = 1.0 * rand() / RAND_MAX;
 
-	if (prob < 0.45) {
+	if (prob < 0.47) {
 		if (this->_x > 1)	moveLeft();
 		else				moveRight();
 	}
-	else if (prob < 0.9) {
+	else if (prob < 0.95) {
 		if (this->_x < end)	moveRight();
 		else				moveLeft();
 	}
