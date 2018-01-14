@@ -47,7 +47,6 @@ class	Game {
 
 		void	drawPlayer(void);
 		void	drawEnemy(void);
-		void	drawBullet(void);
 
 		int		getMenu(void);
 		void	menuInput(int c);

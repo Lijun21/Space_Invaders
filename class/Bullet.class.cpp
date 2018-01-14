@@ -72,7 +72,7 @@ void		Bullet::eliteDown(int i) {
 void		Bullet::shootBullet(void) {
 	attron(COLOR_PAIR(1));
 	mvprintw(_y, _x, ".");
-	attron(COLOR_PAIR(1));
+	attroff(COLOR_PAIR(1));
 }
 
 void		Bullet::clearBullet(void) {

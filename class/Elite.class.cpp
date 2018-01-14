@@ -59,6 +59,7 @@ void		Elite::drawElite(void) {
 	mvprintw(this->_y - 1, this->_x + 1, ">");
 	mvprintw(this->_y - 1, this->_x - 1, "<");
 	mvprintw(this->_y - 2, this->_x, "^");
+	mvprintw(this->_y - 1, this->_x, "+");
 	attroff(COLOR_PAIR(i));
 }
 
@@ -67,6 +68,7 @@ void		Elite::clearElite(void) {
 	mvprintw(this->_y - 1, this->_x + 1, " ");
 	mvprintw(this->_y - 1, this->_x - 1, " ");
 	mvprintw(this->_y - 2, this->_x, " ");
+	mvprintw(this->_y - 1, this->_x, " ");
 }
 
 int			Elite::moveElite(int map, int end) {

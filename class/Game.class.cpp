@@ -153,7 +153,6 @@ void		Game::drawPlayer(void) {
 	mvaddch(_player.getY() + 1, _player.getX() - 1, '^');
 	attroff(COLOR_PAIR(1));
 	drawEnemy();
-	drawBullet();
 	box(stdscr, 0, 0);
 	refresh();
 }
@@ -170,29 +169,6 @@ void		Game::drawEnemy(void) {
 		for (int i = 0; i < _eElite; i++){
 			if (_elite[i].checkLife())
 				_elite[i].drawElite();
-		}
-	}
-}
-
-void		Game::drawBullet(void) {
-	for (int i = 0; i < 16; i++) {
-		if (this->_bullet[i].checkLife()) {
-			// this->_bullet[i].clearBullet();
-			this->_bullet[i].shootBullet();
-		}
-	}
-	for (int i = 0; i < this->_eBullet; i++) {
-		if (this->_ebullet[i].checkLife()) {
-			// this->_ebullet[i].clearBullet();
-			this->_ebullet[i].shootEBullet();
-		}
-	}	
-	if (this->_eElite > 0) {
-		for (int i = 0; i < (_eElite * 3); i++) {
-			if (this->_elitebullet[i].checkLife()) {
-				// this->_elitebullet[i].clearBullet();
-				this->_elitebullet[i].eliteShot();
-			}	
 		}
 	}
 }
@@ -259,7 +235,7 @@ void		Game::moveBullets(void) {
 			this->_bullet[i].clearBullet();
 			this->_bullet[i].moveUp();
 			this->_bullet[i].shootBullet();
-			if (this->_bullet[i].getY() == -1) {
+			if (this->_bullet[i].getY() == 1) {
 				this->_bullet[i].setLife(0);
 				this->_bullet[i].clearBullet();
 			}
@@ -304,7 +280,7 @@ void		Game::moveEnemyBullets(void) {
 			}
 		}
 	}
-	drawPlayer();
+	// drawPlayer();
 }
 
 void		Game::playerBullet(void) {
@@ -324,7 +300,7 @@ void		Game::enemyBullet(void) {
 		rd = rand();
 		if ((rd % _bspd == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
 			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
-			_ebullet[i].shootEBullet();
+			// _ebullet[i].shootEBullet();
 			return;
 		}
 	}
@@ -335,11 +311,11 @@ void		Game::enemyBullet(void) {
 			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i * 3].checkLife() && !_elitebullet[i * 3 + 1].checkLife() 
 				&& !_elitebullet[i * 3 + 2].checkLife() && _elite[x].checkLife()) {
 					_elitebullet[i * 3].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
-					_elitebullet[i * 3].eliteShot();
+					// _elitebullet[i * 3].eliteShot();
 					_elitebullet[i * 3 + 1].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
-					_elitebullet[i * 3 + 1].eliteShot();
+					// _elitebullet[i * 3 + 1].eliteShot();
 					_elitebullet[i * 3 + 2].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
-					_elitebullet[i * 3 + 2].eliteShot();
+					// _elitebullet[i * 3 + 2].eliteShot();
 					return;
 			}
 		}
