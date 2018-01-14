@@ -83,11 +83,12 @@ int		space_invader(void) {
 		if (cnt > 100000000)
 			cnt = 0;
     }
-    WINDOW *end = newwin(6, 12, (col/2 - 3), (row/2) - 5);
+    WINDOW *end = newwin(7, 16, (col/2 - 3), (row/2) - 8);
     while (!game->checkEndgame()) {
     	box(end, 0, 0);
 		mvwprintw(end, 1, 2, "GAMEOVER");
 		mvwprintw(end, 3, 2, "SCORE: %d", game->getScore());
+		mvwprintw(end, 5, 2, "LEVEL: %d", game->getLevel());
 		wrefresh(end);
 		if ((c = getch()) == ' ')
 		{
