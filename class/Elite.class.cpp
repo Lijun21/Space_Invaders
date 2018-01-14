@@ -74,26 +74,30 @@ void		Elite::clearElite(void) {
 }
 
 int			Elite::moveElite(int map, int end) {
-	float prob = 1.0 * rand() / RAND_MAX;
+	int prob = rand();
 
-	if (prob < 0.47) {
-		if (this->_x > 1) {
-			moveLeft();
+	if (prob % 20 < 9) {
+		if (this->_x > 3) {
+			moveLeft(); 
+			moveLeft(); 
 		}
 		else {
+			moveRight();
 			moveRight();
 		}
 	}
-	else if (prob < 0.95) {
-		if (this->_x < end) {
+	else if (prob % 20 < 18) {
+		if (this->_x < end - 3) {
+			moveRight();
 			moveRight();
 		}
 		else {
-			moveLeft();
+			moveLeft(); 
+			moveLeft(); 
 		}
 	}
 	else {
-		if (this->_y < (map - 1))	moveDown();
+		if (this->_y < (map - 2))	moveDown();
 		else { 
 			this->_life--;
 			if (this->_life == 0)
