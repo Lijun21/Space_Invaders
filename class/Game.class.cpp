@@ -12,12 +12,15 @@
 
 #include <Space.Invaders.hpp>
 
-Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(1) {
+Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_bullet = new Bullet[16];
 	this->_ebullet = new Bullet[10];
+	this->_score = 0;
 	this->_bspd = 34;
+	this->_death = 0;
 	spawnEnemy();
 	spawnPlayer();
+	this->_player.setLife(5);
 }
 
 Game::Game(Game &obj) { 
@@ -103,17 +106,27 @@ void		Game::drawEnemy(void) {
 }
 
 void		Game::getInput(int c) {
-	if (c == ' ') {
+	int a = 0;
+
+	if (c == ' ')
 		playerBullet();
-		drawPlayer();
-		return;
-	}
-	if (c == KEY_RIGHT || c == KEY_LEFT)
+	if (c == KEY_RIGHT || c == KEY_LEFT || c == '6' || c == '4'
+		|| c == '1' || c == '3')
 		mvaddch(_player.getY(), _player.getX(), ' ');
-	if (c == KEY_RIGHT && _player.getX() < _mapx)
+	if ((c == KEY_RIGHT || c == '6') && _player.getX() < _mapx)
 		_player.moveRight();
-	if (c == KEY_LEFT && _player.getX() > 1)
+	if ((c == KEY_LEFT || c == '4' ) && _player.getX() > 1)
 		_player.moveLeft();
+	if ((c == '3') && _player.getX() < _mapx)
+	{
+		playerBullet();
+		_player.moveRight();
+	}
+	if ((c == '1') && _player.getX() > 1)
+	{
+		playerBullet();
+		_player.moveLeft();
+	}
 	drawPlayer();
 }
 
@@ -158,7 +171,7 @@ void		Game::moveBullets(void) {
 			this->_ebullet[i].clearBullet();
 			this->_ebullet[i].moveDown();
 			this->_ebullet[i].shootEBullet();
-			if (this->_ebullet[i].getY() >= _mapy) {
+			if (this->_ebullet[i].getY() >= (_mapy + 1)) {
 				this->_ebullet[i].setLife(0);
 				this->_ebullet[i].clearBullet();
 			}
@@ -193,6 +206,33 @@ void		Game::enemyBullet(void) {
 	}
 }
 
+void		Game::moveMenu(int i) {
+	if (i == 1)
+	{
+		this->_menu += 2;
+		if (this->_menu > 5)
+			this->_menu = 1;
+	}
+	else if (i == 2)
+	{
+		this->_menu -= 2;
+		if (this->_menu < 1)
+			this->_menu = 5;
+	}
+
+}
+
+void		Game::menuInput(int c) {
+	if (_menu == 1 && c == ' ')
+		_endgame = 1;
+	if (_menu == 5 && c == ' ')
+		_endgame = -1;
+	if (c == KEY_DOWN)
+		moveMenu(1);
+	if (c == KEY_UP)
+		moveMenu(2);
+}
+
 int			Game::getScore(void) {
 	return (this->_score);
 }
@@ -201,4 +241,10 @@ int			Game::getLife(void) {
 	return (this->_player.checkLife());
 }
 
+int			Game::getMenu(void) {
+	return (this->_menu);
+}
 
+void		Game::setEndgame(int i) {
+	this->_endgame = i;
+}

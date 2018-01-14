@@ -45,6 +45,12 @@ class	Game {
 		void	drawPlayer(void);
 		void	drawEnemy(void);
 
+		int		getMenu(void);
+		void	menuInput(int c);
+		void	moveMenu(int i);
+
+		void	setEndgame(int i);
+
 	private:
 
 		int		_checkHit(int x, int y);
@@ -64,6 +70,8 @@ class	Game {
 		int		_score;
 
 		int		_bspd;
+
+		int		_menu;
 
 };
 

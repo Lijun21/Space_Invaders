@@ -14,6 +14,7 @@
 # define SPACE_INVADERS
 
 # include <ncurses.h>
+# include <curses.h>
 # include <iostream>
 # include <thread>
 # include <chrono>
