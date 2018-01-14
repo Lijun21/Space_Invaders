@@ -142,13 +142,15 @@ void		Game::moveEnemies(void) {
 }
 
 void		Game::spawnPlayer(void) {
-	_player = Player(25, _mapy);
+	_player = Player(25, _mapy - 1);
 	drawPlayer();
 }
 
 void		Game::drawPlayer(void) {
 	attron(COLOR_PAIR(1));
 	mvaddch(_player.getY(), _player.getX(), '^');
+	mvaddch(_player.getY() + 1, _player.getX() + 1, '^');
+	mvaddch(_player.getY() + 1, _player.getX() - 1, '^');
 	attroff(COLOR_PAIR(1));
 	drawEnemy();
 	box(stdscr, 0, 0);
@@ -177,8 +179,11 @@ void		Game::getInput(int c) {
 	if (c == ' ')
 		playerBullet();
 	if (c == KEY_RIGHT || c == KEY_LEFT || c == '6' || c == '4'
-		|| c == '1' || c == '3')
+		|| c == '1' || c == '3') {
 		mvaddch(_player.getY(), _player.getX(), ' ');
+		mvaddch(_player.getY() + 1, _player.getX() + 1, ' ');
+		mvaddch(_player.getY() + 1, _player.getX() - 1, ' ');
+	}
 	if ((c == KEY_RIGHT || c == '6') && _player.getX() < _mapx)
 		_player.moveRight();
 	if ((c == KEY_LEFT || c == '4' ) && _player.getX() > 1)
@@ -300,7 +305,8 @@ void		Game::enemyBullet(void) {
 	{
 		for (int i = 0; i < _eElite; i++) {
 			x++;
-			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i].checkLife() && _elite[x].checkLife()) {
+			if ((rd % (_bspd / 3) == 0) && !_elitebullet[i * 3].checkLife() && !_elitebullet[i * 3 + 1].checkLife() 
+				&& !_elitebullet[i * 3 + 2].checkLife() && _elite[x].checkLife()) {
 					_elitebullet[i * 3].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
 					_elitebullet[i * 3].eliteShot();
 					_elitebullet[i * 3 + 1].setInfo(_elite[x].getX(), _elite[x].getY(), 1);
