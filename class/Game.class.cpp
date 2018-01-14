@@ -27,7 +27,7 @@ Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_score = 0;
 	this->_bspd = 34;
 	this->_death = 0;
-	this->_level = 0;
+	this->_level = 102;
 
 	spawnEnemy();
 	spawnPlayer();
@@ -80,8 +80,8 @@ void		Game::spawnEnemy(void) {
 	delete [] this->_ebullet;
 	delete [] this->_enemy;
 
-	this->_eCount = 10 + (level * 2);
-	this->_eBullet = 10 + (level * 2);
+	this->_eCount = 10 + (this->_level * 2);
+	this->_eBullet = 10 + (this->_level * 2);
 
 	this->_ebullet = new Bullet[this->_eBullet];
 	this->_enemy = new Alien[this->_eCount];
