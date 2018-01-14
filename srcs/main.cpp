@@ -48,6 +48,7 @@ int		space_invader(void) {
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(4, COLOR_GREEN, COLOR_BLACK);
 	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(6, COLOR_BLUE, COLOR_BLACK);
     refresh();
 
     WINDOW *menu = newwin(7, 11, (col/2 - 3), (row/2) - 5);
@@ -78,30 +79,32 @@ int		space_invader(void) {
         mvprintw(0, 0, "SCORE  %d", game->getScore());
         mvprintw(col - 1, 0, "LIVES %d | LEVEL %d | TIME %d",
 		game->getLife(), game->getLevel(), timer.getSec(clock()));
-        if ((c = getch()) != ERR && curr_time % 25 != 0)
+        if ((c = getch()) != ERR)
             game->getInput(c);
-        if (curr_time % 47 == 0)
+        if (curr_time % 52 == 0)
             game->moveBullets();
-        if (curr_time % 143 == 0) {
-            game->moveEnemies();
+        if (curr_time % 203 == 0)
+            game->moveEnemyBullets();
+        if (curr_time % 151 == 0)
+        	game->moveEnemies();
+        if (curr_time % 203 == 0)
             game->enemyBullet();
-        }
-		if (curr_time % 960 == 0) {
-			if ((y = col - rand()%col) >= (col - 1))
-				y = y - 3;
-			if ((x = row - rand()%row) >= (row - 1))
-				x = x - 3;
-			mvprintw(y, x, "*");
-		}
-		if (curr_time % 501 == 0) {
-			for (int i = 1; i< 1000; i++) {
-				if ((y = col - rand()%col) >= (col - 1))
-					y = y - 3;
-				if ((x = row - rand()%row) >= (row - 1))
-					x = x - 3;
-				mvprintw(y, x, " ");
-			}
-		}
+		// if (curr_time % 5578 == 0) {
+		// 	if ((y = col - rand()%col) >= (col - 1))
+		// 		y = y - 3;
+		// 	if ((x = row - rand()%row) >= (row - 1))
+		// 		x = x - 3;
+		// 	mvprintw(y, x, "*");
+		// }
+		// if (curr_time % 501 == 0) {
+		// 	for (int i = 1; i< 1000; i++) {
+		// 		if ((y = col - rand()%col) >= (col - 1))
+		// 			y = y - 3;
+		// 		if ((x = row - rand()%row) >= (row - 1))
+		// 			x = x - 3;
+		// 		mvprintw(y, x, " ");
+		// 	}
+		// }
 		curr_time = timer.checkTime(clock());
     }
     WINDOW *end = newwin(7, 16, (col/2 - 3), (row/2) - 8);

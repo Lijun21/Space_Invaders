@@ -41,7 +41,7 @@ int			Alien::movement(int map, int end) {
 		else				moveLeft();
 	}
 	else {
-		if (this->_y < (map - 1))	moveDown();
+		if (this->_y < (map - 2))	moveDown();
 		else { 
 			this->_life = 0;
 			mvprintw(this->_y, this->_x, " ");

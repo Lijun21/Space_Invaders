@@ -38,6 +38,7 @@ class	Game {
 		void	playerBullet(void);
 		void	moveBullets(void);
 
+		void	moveEnemyBullets(void);
 		void	enemyBullet(void);
 
 		int		getScore(void);
@@ -46,6 +47,7 @@ class	Game {
 
 		void	drawPlayer(void);
 		void	drawEnemy(void);
+		void	drawBullet(void);
 
 		int		getMenu(void);
 		void	menuInput(int c);

@@ -153,6 +153,7 @@ void		Game::drawPlayer(void) {
 	mvaddch(_player.getY() + 1, _player.getX() - 1, '^');
 	attroff(COLOR_PAIR(1));
 	drawEnemy();
+	drawBullet();
 	box(stdscr, 0, 0);
 	refresh();
 }
@@ -169,6 +170,29 @@ void		Game::drawEnemy(void) {
 		for (int i = 0; i < _eElite; i++){
 			if (_elite[i].checkLife())
 				_elite[i].drawElite();
+		}
+	}
+}
+
+void		Game::drawBullet(void) {
+	for (int i = 0; i < 16; i++) {
+		if (this->_bullet[i].checkLife()) {
+			// this->_bullet[i].clearBullet();
+			this->_bullet[i].shootBullet();
+		}
+	}
+	for (int i = 0; i < this->_eBullet; i++) {
+		if (this->_ebullet[i].checkLife()) {
+			// this->_ebullet[i].clearBullet();
+			this->_ebullet[i].shootEBullet();
+		}
+	}	
+	if (this->_eElite > 0) {
+		for (int i = 0; i < (_eElite * 3); i++) {
+			if (this->_elitebullet[i].checkLife()) {
+				// this->_elitebullet[i].clearBullet();
+				this->_elitebullet[i].eliteShot();
+			}	
 		}
 	}
 }
@@ -245,6 +269,9 @@ void		Game::moveBullets(void) {
 			}
 		}
 	}
+}
+
+void		Game::moveEnemyBullets(void) {
 	for (int i = 0; i < this->_eBullet; i++) {
 		if (this->_ebullet[i].checkLife()) {
 			this->_ebullet[i].clearBullet();
