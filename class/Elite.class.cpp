@@ -46,12 +46,20 @@ int			Elite::isEHit(int x, int y) {
 }
 
 void		Elite::drawElite(void) {
-	attron(COLOR_PAIR(4));
+	int i = 0;
+
+	if (this->_life > 20)
+		i = 6;
+	else if (this->_life >= 8)
+		i = 4;
+	else
+		i = 2;
+	attron(COLOR_PAIR(i));
 	mvprintw(this->_y, this->_x, "V");
 	mvprintw(this->_y - 1, this->_x + 1, ">");
 	mvprintw(this->_y - 1, this->_x - 1, "<");
 	mvprintw(this->_y - 2, this->_x, "^");
-	attroff(COLOR_PAIR(4));
+	attroff(COLOR_PAIR(i));
 }
 
 void		Elite::clearElite(void) {
