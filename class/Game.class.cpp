@@ -27,7 +27,7 @@ Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
 	this->_score = 0;
 	this->_bspd = 34;
 	this->_death = 0;
-	this->_level = 3;
+	this->_level = 0;
 
 	spawnEnemy();
 	spawnPlayer();
