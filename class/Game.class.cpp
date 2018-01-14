@@ -80,8 +80,8 @@ void		Game::spawnEnemy(void) {
 	delete [] this->_ebullet;
 	delete [] this->_enemy;
 
-	this->_eCount += 2;
-	this->_eBullet += 2;
+	this->_eCount = 10 + (level * 2);
+	this->_eBullet = 10 + (level * 2);
 
 	this->_ebullet = new Bullet[this->_eBullet];
 	this->_enemy = new Alien[this->_eCount];
