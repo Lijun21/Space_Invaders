@@ -34,6 +34,7 @@ int		space_invader(void) {
 
     int col = 0;
     int row = 0;
+    int x, y;
     getmaxyx(stdscr, col, row);
 
     Game *game = new Game(row - 2, col - 2);
@@ -81,6 +82,22 @@ int		space_invader(void) {
         if (cnt % 10000 == 0) {
             game->moveEnemies();
             game->enemyBullet();
+        }
+        if (cnt % 5500 == 0){
+            if ((y = col - rand()%col) >= (col - 1))
+                y = y - 3;
+            if ((x = row - rand()%row) >= (row - 1))
+                x = x - 3;
+            mvprintw(y, x, "*");
+        }
+        if (cnt % 5400 == 0){
+            for (int i = 1; i< 1000; i++){
+            if ((y = col - rand()%col) >= (col - 1))
+                y = y - 3;
+            if ((x = row - rand()%row) >= (row - 1))
+                x = x - 3;
+            mvprintw(y, x, " ");
+            }
         }
 		cnt++;
 		if (cnt > 100000000)
