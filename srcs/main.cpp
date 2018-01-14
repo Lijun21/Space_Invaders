@@ -6,7 +6,7 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/13 23:24:58 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/14 00:37:12 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int		space_invader(void) {
     	box(menu, 0, 0);
     	mvwprintw(menu, game->getMenu(), 2, ">");
     	if ((c = getch()) != ERR) {
+			if (c == ' ' || c == KEY_UP || c == KEY_DOWN)
+				system("afplay sound/boom.mp3 &");
     		if (c == ' ' && game->getMenu() == 3)
     			helpMenu((col/2) - 3, (row/2) + 7);
     		else {
@@ -71,24 +73,14 @@ int		space_invader(void) {
     clear();
     delwin(menu);
 
+	system("afplay sound/tara.mp3 &");
+	system("afplay sound/bgm.mp3 &");
+
 	Timer	timer(clock());
 	int		curr_time = timer.checkTime(clock());
 	int		y, x, cnt = 0;
 
     while(game->checkEndgame() == 1) {
-        mvprintw(0, 0, "[SCORE  %d]", game->getScore());
-        mvprintw(col - 1, 0, "[LIVES %d | LEVEL %d | TIME %d | BULLETS (%d/16)]",
-		game->getLife(), game->getLevel(), timer.getSec(clock()), game->bulletCount());
-        if ((c = getch()) != ERR)
-            game->getInput(c);
-        if (cnt % 5000 == 0)
-            game->moveBullets();
-        if (cnt % 6500 == 0)
-            game->moveEnemyBullets();
-        if (cnt % 15000 == 0)
-        	game->moveEnemies();
-        if (cnt % 11500 == 0)
-            game->enemyBullet();
 		if (cnt % 11500 == 0) {
 			if ((y = col - rand()%col) >= (col - 1))
 				y = y - 3;
@@ -105,10 +97,26 @@ int		space_invader(void) {
 				mvprintw(y, x, " ");
 			}
 		}
+        mvprintw(0, 0, "[SCORE  %d]", game->getScore());
+        mvprintw(col - 1, 0, "[LIVES %d | LEVEL %d | TIME %d | BULLETS (%d/16)]",
+		game->getLife(), game->getLevel(), timer.getSec(clock()), game->bulletCount());
+        if ((c = getch()) != ERR)
+            game->getInput(c);
+        if (cnt % 5000 == 0)
+            game->moveBullets();
+        if (cnt % 6500 == 0)
+            game->moveEnemyBullets();
+        if (cnt % 15000 == 0)
+        	game->moveEnemies();
+        if (cnt % 11500 == 0)
+            game->enemyBullet();
 		curr_time = timer.checkTime(clock());
 		cnt++;
 		if (cnt > 100000000) cnt = 0;
     }
+
+	system("killall afplay && afplay sound/gameover.mp3 &");
+
     WINDOW *end = newwin(7, 16, (col/2 - 3), (row/2) - 8);
     while (!game->checkEndgame()) {
     	box(end, 0, 0);
