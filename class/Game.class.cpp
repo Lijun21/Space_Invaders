@@ -13,11 +13,18 @@
 #include <Space.Invaders.hpp>
 
 Game::Game(int x, int y) : _mapx(x), _mapy(y), _endgame(2), _menu(1) {
+	this->_eCount = 8;
+	this->_eBullet = 8;
+
 	this->_bullet = new Bullet[16];
-	this->_ebullet = new Bullet[10];
+	this->_ebullet = new Bullet[this->_eBullet];
+	this->_enemy = new Alien[this->_eCount];
+
 	this->_score = 0;
 	this->_bspd = 34;
 	this->_death = 0;
+	this->_level = 0;
+
 	spawnEnemy();
 	spawnPlayer();
 	this->_player.setLife(5);
@@ -30,6 +37,7 @@ Game::Game(Game &obj) {
 Game::~Game(void) {
 	delete [] this->_bullet;
 	delete [] this->_ebullet;
+	delete [] this->_enemy;
 }
 
 Game &Game::operator=(Game const &r) {
@@ -48,9 +56,20 @@ int			Game::checkEndgame(void) {
 
 void		Game::spawnEnemy(void) {
 	clear();
+
+	delete [] this->_ebullet;
+	delete [] this->_enemy;
+
+	this->_eCount += 2;
+	this->_eBullet += 2;
+
+	this->_ebullet = new Bullet[this->_eBullet];
+	this->_enemy = new Alien[this->_eCount];
+
+	this->_level++;
 	if (this->_bspd > 4)
 		this->_bspd -= 4;
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < this->_eCount; i++) {
 		_enemy[i].setPos(1 + (rand() % _mapx + 3), (rand() % 3 + 1));
 		_enemy[i].setLife(1);
 	}
@@ -59,10 +78,10 @@ void		Game::spawnEnemy(void) {
 void		Game::moveEnemies(void) {
 	_death = 0;
 
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < this->_eCount; i++){
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), " ");
 		}
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < this->_eCount; i++){
 		if (_enemy[i].checkLife()) {
 			if(_enemy[i].movement(_mapy, _mapx)) {
 				if(_player.loseLife())
@@ -76,7 +95,7 @@ void		Game::moveEnemies(void) {
 		if (!_enemy[i].checkLife())
 			_death++;
     }
-    if (_death == 10)
+    if (_death == this->_eCount)
     	spawnEnemy();
     drawPlayer();
 }
@@ -96,7 +115,7 @@ void		Game::drawPlayer(void) {
 }
 
 void		Game::drawEnemy(void) {
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < this->_eCount; i++){
 		if (_enemy[i].checkLife()) {
 			attron(COLOR_PAIR(2));
 			mvprintw(_enemy[i].getY(), _enemy[i].getX(), "@");
@@ -131,7 +150,7 @@ void		Game::getInput(int c) {
 }
 
 int		Game::_checkHit(int x, int y) {
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < this->_eCount; i++){
 		if (_enemy[i].checkLife() && _enemy[i].isHit(x, y)) {
 			_score = _score + 1;
 			return (1);
@@ -166,7 +185,7 @@ void		Game::moveBullets(void) {
 			}
 		}
 	}
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < this->_eBullet; i++) {
 		if (this->_ebullet[i].checkLife()) {
 			this->_ebullet[i].clearBullet();
 			this->_ebullet[i].moveDown();
@@ -196,7 +215,7 @@ void		Game::playerBullet(void) {
 void		Game::enemyBullet(void) {
 	int rd = 0;
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < _eBullet; i++) {
 		rd = rand();
 		if ((rd % _bspd == 0) && !_ebullet[i].checkLife() && _enemy[i].checkLife()) {
 			_ebullet[i].setInfo(_enemy[i].getX(), _enemy[i].getY(), 1);
@@ -235,6 +254,10 @@ void		Game::menuInput(int c) {
 
 int			Game::getScore(void) {
 	return (this->_score);
+}
+
+int			Game::getLevel(void) {
+	return (this->_level);
 }
 
 int			Game::getLife(void) {

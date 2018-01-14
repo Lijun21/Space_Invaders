@@ -41,6 +41,7 @@ class	Game {
 
 		int		getScore(void);
 		int		getLife(void);
+		int		getLevel(void);
 
 		void	drawPlayer(void);
 		void	drawEnemy(void);
@@ -58,7 +59,7 @@ class	Game {
 
 		int		_death;
 		int		_input;
-		Alien 	_enemy[10];
+		Alien 	*_enemy;
 		Player	_player;
 		int		_endgame;
 		Bullet	*_bullet;
@@ -68,10 +69,14 @@ class	Game {
 		int		_mapy;
 
 		int		_score;
+		int		_level;
 
 		int		_bspd;
 
 		int		_menu;
+
+		int		_eCount;
+		int		_eBullet;
 
 };
 
