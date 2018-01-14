@@ -6,7 +6,7 @@
 /*   By: lwang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 20:27:08 by lwang             #+#    #+#             */
-/*   Updated: 2018/01/13 22:47:30 by mikim            ###   ########.fr       */
+/*   Updated: 2018/01/13 22:53:00 by mikim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,20 @@ int		space_invader(void) {
 		game->getLife(), game->getLevel(), timer.getSec(clock()));
         if ((c = getch()) != ERR && curr_time % 25 != 0)
             game->getInput(c);
-        if (curr_time % 50 == 0)
+        if (curr_time % 47 == 0)
             game->moveBullets();
-        if (curr_time % 150 == 0) {
+        if (curr_time % 143 == 0) {
             game->moveEnemies();
             game->enemyBullet();
         }
-		if (cnt % 5500 == 0) {
+		if (curr_time % 960 == 0) {
 			if ((y = col - rand()%col) >= (col - 1))
 				y = y - 3;
 			if ((x = row - rand()%row) >= (row - 1))
 				x = x - 3;
 			mvprintw(y, x, "*");
 		}
-		if (cnt % 5400 == 0) {
+		if (curr_time % 501 == 0) {
 			for (int i = 1; i< 1000; i++) {
 				if ((y = col - rand()%col) >= (col - 1))
 					y = y - 3;
